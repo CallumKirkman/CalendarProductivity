@@ -1,51 +1,13 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import eventsData from "../../components/eventsData";
-import deadlinesData from "../../components/deadlinesData";
+import writeData from "./writeDataTest";
+import readData from "./readDataTest";
 
-export default function App() {
-  const EVENTS_KEY = "@events_key";
-  const DEADLINES_KEY = "@deadlines_key";
-
+const App = () => {
   const [data, setData] = useState("");
-
-  const saveEventsArray = async () => {
-    try {
-      const jsonValue = JSON.stringify(eventsData);
-      await AsyncStorage.setItem(EVENTS_KEY, jsonValue);
-
-      alert("Data successfully saved");
-    } catch (e) {
-      alert("Failed to save the data to the storage");
-    }
-  };
-
-  const readEventsArray = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem(EVENTS_KEY);
-      let jsonList = [];
-
-      if (jsonValue !== null) {
-        for (var i = 0; i < eventsData.length; i++) {
-          jsonList.push(eventsData[i]);
-        }
-
-        console.log(jsonList);
-        // setData(jsonList);
-      }
-    } catch (e) {
-      alert("Failed to fetch the data from storage");
-    }
-  };
 
   const clearStorage = async () => {
     try {
@@ -57,24 +19,20 @@ export default function App() {
     }
   };
 
-  const sendData = () => {
-    if (!eventsData) return;
-    saveEventsArray(eventsData);
-    setData("");
-    readEventsArray();
-  };
-
-  useEffect(() => {
-    readEventsArray();
-  }, []);
+  // useEffect(() => {
+  //   readEventsArray();
+  // }, []);
 
   return (
     <View style={styles.container}>
       <View>
         <Text> {data ? `${data}` : "No data to display!"} </Text>
 
-        <TouchableOpacity onPress={sendData}>
-          <Text>Set data</Text>
+        <TouchableOpacity onPress={writeData}>
+          <Text>Write data</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={readData}>
+          <Text>Read data</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={clearStorage}>
           <Text>Clear data</Text>
@@ -82,7 +40,9 @@ export default function App() {
       </View>
     </View>
   );
-}
+};
+
+export default App;
 
 const styles = StyleSheet.create({
   container: {
