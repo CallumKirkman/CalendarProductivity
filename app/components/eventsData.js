@@ -1,0 +1,78 @@
+import { createFixedWeekDate } from "react-native-week-view";
+
+import Colour from "../static/Colour";
+
+export default [
+  {
+    id: 1,
+    description: "Advanced Development",
+    startDate: createFixedWeekDate("MON", 14),
+    endDate: createFixedWeekDate("MON", 16),
+    color: Colour.blue,
+    location: "P225",
+    type: "Lab",
+  },
+  {
+    id: 2,
+    description: "Software Q&T",
+    startDate: createFixedWeekDate("MON", 18),
+    endDate: createFixedWeekDate("MON", 19),
+    color: Colour.red,
+    location: "Lawrence",
+    type: "Lecture",
+  },
+  {
+    id: 3,
+    description: "Advanced Development",
+    startDate: createFixedWeekDate("TUE", 10),
+    endDate: createFixedWeekDate("TUE", 12),
+    color: Colour.blue,
+    location: "Lawrence",
+    type: "Lecture",
+  },
+  {
+    id: 4,
+    description: "Ubiquitous Computing",
+    startDate: createFixedWeekDate("TUE", 16),
+    endDate: createFixedWeekDate("TUE", 18),
+    color: Colour.green,
+    location: "P221",
+    type: "Lab",
+  },
+  {
+    id: 5,
+    description: "Software Q&T",
+    startDate: createFixedWeekDate("TUE", 18),
+    endDate: createFixedWeekDate("TUE", 19),
+    color: Colour.red,
+    location: "P227",
+    type: "Lab",
+  },
+  {
+    id: 6,
+    description: "Individual Project",
+    startDate: createFixedWeekDate("WED", 12),
+    endDate: createFixedWeekDate("WED", 14),
+    color: Colour.darkPurple,
+    location: "KG01",
+    type: "Lecture",
+  },
+  {
+    id: 7,
+    description: "Ubiquitous Computing",
+    startDate: createFixedWeekDate("WED", 14),
+    endDate: createFixedWeekDate("WED", 16),
+    color: Colour.green,
+    location: "P235",
+    type: "Lab",
+  },
+  {
+    id: 8,
+    description: "Software Q&T",
+    startDate: createFixedWeekDate("THU", 11),
+    endDate: createFixedWeekDate("THU", 12),
+    color: Colour.red,
+    location: "F112",
+    type: "Seminar",
+  },
+];
