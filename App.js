@@ -5,7 +5,7 @@ import Timetable from "./app/screens/main/Timetable";
 import Test from "./app/screens/main/Test";
 
 const App = () => {
-  return <Test />;
+  return <Timetable />;
 };
 
 export default App;

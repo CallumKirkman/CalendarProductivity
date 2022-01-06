@@ -10,7 +10,34 @@ import {
 import WeekView from "react-native-week-view";
 
 import eventsData from "../../components/eventsData";
+import readEvents from "../../components/readEvents";
+import readDeadlines from "../../components/readDeadlines";
 import Colour from "../../static/Colour";
+
+let localEvents = "";
+let localDeadlines = "";
+
+const logEvents = () => {
+  readEvents().then((events) => {
+    // console.log(
+    //   "Local Events -----------------------------------------------------------------"
+    // );
+    // console.log(events);
+
+    localEvents = events;
+  });
+};
+
+const logDeadlines = () => {
+  readDeadlines().then((deadlines) => {
+    // console.log(
+    //   "Local Deadlines -----------------------------------------------------------------"
+    // );
+    // console.log(deadlines);
+
+    localDeadlines = deadlines;
+  });
+};
 
 const showToday = ({ formattedDate, textStyle }) => (
   <Text style={[textStyle, { fontWeight: "bold", fontSize: 13 }]}>
@@ -64,6 +91,9 @@ class Timetable extends React.Component {
   };
 
   render() {
+    logEvents();
+    logDeadlines();
+
     const { events, selectedDate } = this.state;
     return (
       <SafeAreaView style={styles.container}>

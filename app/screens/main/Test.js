@@ -3,8 +3,10 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import writeData from "./writeDataTest";
-import readData from "./readDataTest";
+import writeEvents from "../../components/writeEvents";
+import readEvents from "../../components/readEvents";
+import writeDeadlines from "../../components/writeDeadlines";
+import readDeadlines from "../../components/readDeadlines";
 
 const App = () => {
   const [data, setData] = useState("");
@@ -20,20 +22,48 @@ const App = () => {
   };
 
   // useEffect(() => {
-  //   readEventsArray();
+  //   let test = readEvents();
   // }, []);
+
+  const logEvents = () => {
+    readEvents().then((events) => {
+      console.log(
+        "Events -----------------------------------------------------------------"
+      );
+      console.log(events);
+    });
+  };
+
+  const logDeadlines = () => {
+    readDeadlines().then((deadlines) => {
+      console.log(
+        "Deadlines -----------------------------------------------------------------"
+      );
+      console.log(deadlines);
+    });
+  };
 
   return (
     <View style={styles.container}>
       <View>
-        <Text> {data ? `${data}` : "No data to display!"} </Text>
+        {/* <Text> {data ? `${data}` : "No data to display!"} </Text> */}
 
-        <TouchableOpacity onPress={writeData}>
-          <Text>Write data</Text>
+        <TouchableOpacity onPress={writeEvents}>
+          <Text>Write events</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={readData}>
-          <Text>Read data</Text>
+
+        <TouchableOpacity onPress={logEvents}>
+          <Text>Log events</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity onPress={writeDeadlines}>
+          <Text>Write deadlines</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={logDeadlines}>
+          <Text>Log deadlines</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity onPress={clearStorage}>
           <Text>Clear data</Text>
         </TouchableOpacity>
