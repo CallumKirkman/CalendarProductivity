@@ -1,31 +1,31 @@
+import Colour from "../static/Colour";
+
 export default [
   {
-    title: "Ubiquitous Computing",
-    startTime: new Date(2022, 1, 14, 12, 0),
-    endTime: new Date(2022, 1, 14, 12, 30),
+    id: 1,
+    description: "Ubiquitous Computing",
+    startDate: new Date(2022, 0, 14, 12, 0),
+    endDate: new Date(2022, 0, 14, 12, 30),
+    color: Colour.black,
     location: "Exam building",
     type: "Coursework",
   },
   {
-    title: "Advanced Development",
-    startTime: new Date(2022, 1, 17, 14, 0),
-    endTime: new Date(2022, 1, 14, 16, 30),
+    id: 2,
+    description: "Advanced Development",
+    startDate: new Date(2022, 0, 17, 14, 0),
+    endDate: new Date(2022, 0, 17, 16, 30),
+    color: Colour.black,
     location: "Exam building",
     type: "Assessment",
   },
   {
-    title: "Software Q&T",
-    startTime: new Date(2022, 1, 20, 14, 0),
-    endTime: new Date(2022, 1, 20, 16, 30),
+    id: 3,
+    description: "Software Q&T",
+    startDate: new Date(2022, 0, 20, 14, 0),
+    endDate: new Date(2022, 0, 20, 16, 30),
+    color: Colour.black,
     location: "Exam building",
     type: "Assessment",
   },
 ];
-
-// {
-//   title: "Advanced Development",
-//   startTime: genTimeBlock("TUE", 10),
-//   endTime: genTimeBlock("TUE", 12),
-//   location: "Lawrence",
-//   type: "Lecture",
-// },

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -10,62 +10,74 @@ import {
 import WeekView from "react-native-week-view";
 
 import eventsData from "../../components/eventsData";
+import deadlinesData from "../../components/deadlinesData";
 import readEvents from "../../components/readEvents";
 import readDeadlines from "../../components/readDeadlines";
 import Colour from "../../static/Colour";
 
-let localEvents = "";
-let localDeadlines = "";
+const Timetable = () => {
+  console.log("Timetable");
 
-const logEvents = () => {
-  readEvents().then((events) => {
-    // console.log(
-    //   "Local Events -----------------------------------------------------------------"
-    // );
-    // console.log(events);
+  const [localEvents, setLocalEvents] = useState([]);
+  const [localDeadlines, setLocalDeadlines] = useState([]);
 
-    localEvents = events;
-  });
-};
+  let refreshBoolean = false;
+  let numbDays = 7;
 
-const logDeadlines = () => {
-  readDeadlines().then((deadlines) => {
-    // console.log(
-    //   "Local Deadlines -----------------------------------------------------------------"
-    // );
-    // console.log(deadlines);
+  useEffect(() => {
+    logEvents();
+    logDeadlines();
+  }, []);
 
-    localDeadlines = deadlines;
-  });
-};
+  const logEvents = () => {
+    readEvents().then((events) => {
+      // console.log(
+      //   "Local Events -----------------------------------------------------------------"
+      // );
+      // console.log(events);
 
-const showToday = ({ formattedDate, textStyle }) => (
-  <Text style={[textStyle, { fontWeight: "bold", fontSize: 13 }]}>
-    {formattedDate}
-  </Text>
-);
-
-const showRefresh = ({ style }) => (
-  <ActivityIndicator style={style} color={Colour.red} size="large" />
-);
-
-// For debugging purposes
-const showFixedComponent = false;
-
-class Timetable extends React.Component {
-  state = {
-    events: eventsData,
-    selectedDate: new Date(),
+      setLocalEvents(events);
+    });
   };
 
-  onEventPress = ({ description, startDate, endDate, location, type }) => {
+  const logDeadlines = () => {
+    readDeadlines().then((deadlines) => {
+      // console.log(
+      //   "Local Deadlines -----------------------------------------------------------------"
+      // );
+      // console.log(deadlines);
+
+      setLocalDeadlines(deadlines);
+    });
+  };
+
+  const showToday = ({ formattedDate, textStyle }) => (
+    <Text style={[textStyle, { fontWeight: "bold", fontSize: 13 }]}>
+      {formattedDate}
+    </Text>
+  );
+
+  const showRefresh = ({ style }) => (
+    <ActivityIndicator style={style} color={Colour.red} size="large" />
+  );
+
+  // For debugging purposes
+  const showFixedComponent = false;
+
+  const onEventPress = ({
+    description,
+    startDate,
+    endDate,
+    location,
+    type,
+  }) => {
     Alert.alert(
       `${description}`,
       `Start: ${startDate} \nEnd: ${endDate} \nLocation: ${location} \nType: ${type}`
     );
   };
 
-  onGridClick = (event, startHour, date) => {
+  const onGridClick = (event, startHour, date) => {
     const year = date.getFullYear();
     const month = date.getMonth() + 1; // zero-based
     const day = date.getDate();
@@ -76,56 +88,44 @@ class Timetable extends React.Component {
     Alert.alert(`${year}-${month}-${day} ${hour}:${minutes}:${seconds}`);
   };
 
-  onDragEvent = (event, newStartDate, newEndDate) => {
-    // Here you should update the event in your DB with the new date and hour
-    this.setState({
-      events: [
-        ...this.state.events.filter((e) => e.id !== event.id),
-        {
-          ...event,
-          startDate: newStartDate,
-          endDate: newEndDate,
-        },
-      ],
-    });
-  };
-
-  render() {
-    logEvents();
-    logDeadlines();
-
-    const { events, selectedDate } = this.state;
-    return (
-      <SafeAreaView style={styles.container}>
-        <WeekView
-          ref={(r) => {
-            this.componentRef = r;
-          }}
-          events={events}
-          selectedDate={selectedDate}
-          TodayHeaderComponent={showToday}
-          numberOfDays={7}
-          onEventPress={this.onEventPress}
-          onGridClick={this.onGridClick}
-          headerStyle={styles.header}
-          headerTextStyle={styles.headerText}
-          hourTextStyle={styles.hourText}
-          eventContainerStyle={styles.eventContainer}
-          formatDateHeader={showFixedComponent ? "ddd" : "ddd DD"}
-          hoursInDisplay={8}
-          timeStep={60}
-          startHour={9}
-          fixedHorizontally={showFixedComponent}
-          showTitle={!showFixedComponent}
-          showNowLine
-          onDragEvent={this.onDragEvent}
-          isRefreshing={false}
-          RefreshComponent={showRefresh}
-        />
-      </SafeAreaView>
-    );
+  if (localEvents.length === 0 || localDeadlines.length === 0) {
+    console.log("No data yet");
+    refreshBoolean = true;
+  } else {
+    console.log("Data found");
+    refreshBoolean = false;
   }
-}
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <WeekView
+        // ref={(r) => {
+        //   componentRef = r;
+        // }}
+        events={localEvents}
+        selectedDate={new Date()}
+        TodayHeaderComponent={showToday}
+        numberOfDays={numbDays}
+        onEventPress={onEventPress}
+        onGridClick={onGridClick}
+        headerStyle={styles.header}
+        headerTextStyle={styles.headerText}
+        hourTextStyle={styles.hourText}
+        eventContainerStyle={styles.eventContainer}
+        formatDateHeader={showFixedComponent ? "ddd" : "ddd DD"}
+        hoursInDisplay={8}
+        timeStep={30}
+        startHour={9}
+        fixedHorizontally={showFixedComponent}
+        showTitle={!showFixedComponent}
+        showNowLine
+        // onDragEvent={onDragEvent}
+        isRefreshing={refreshBoolean}
+        RefreshComponent={showRefresh}
+      />
+    </SafeAreaView>
+  );
+};
 
 export default Timetable;
 
