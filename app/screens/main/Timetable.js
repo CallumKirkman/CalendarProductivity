@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
+  View,
+  Button,
   StyleSheet,
   Text,
   Alert,
@@ -9,47 +11,59 @@ import {
 
 import WeekView from "react-native-week-view";
 
-import eventsData from "../../components/eventsData";
-import deadlinesData from "../../components/deadlinesData";
-import readEvents from "../../components/readEvents";
-import readDeadlines from "../../components/readDeadlines";
+import readData from "../../components/ReadData";
+// import readEvents from "../../components/readEvents";
+// import readDeadlines from "../../components/readDeadlines";
 import Colour from "../../static/Colour";
 
-const Timetable = () => {
+const Timetable = ({ navigation }) => {
   console.log("Timetable");
 
-  const [localEvents, setLocalEvents] = useState([]);
-  const [localDeadlines, setLocalDeadlines] = useState([]);
+  // const [localEvents, setLocalEvents] = useState([]);
+  // const [localDeadlines, setLocalDeadlines] = useState([]);
+  const [localData, setLocalData] = useState([]);
+  const [numDays, setNumDays] = useState(7);
 
   let refreshBoolean = false;
-  let numbDays = 7;
 
   useEffect(() => {
-    logEvents();
-    logDeadlines();
+    // logEvents();
+    // logDeadlines();
+    logData();
   }, []);
 
-  const logEvents = () => {
-    readEvents().then((events) => {
+  const logData = () => {
+    readData().then((data) => {
       // console.log(
-      //   "Local Events -----------------------------------------------------------------"
+      //   "Local data -----------------------------------------------------------------"
       // );
-      // console.log(events);
+      // console.log(data);
 
-      setLocalEvents(events);
+      setLocalData(data);
     });
   };
 
-  const logDeadlines = () => {
-    readDeadlines().then((deadlines) => {
-      // console.log(
-      //   "Local Deadlines -----------------------------------------------------------------"
-      // );
-      // console.log(deadlines);
+  // const logEvents = () => {
+  //   readEvents().then((events) => {
+  //     // console.log(
+  //     //   "Local Events -----------------------------------------------------------------"
+  //     // );
+  //     // console.log(events);
 
-      setLocalDeadlines(deadlines);
-    });
-  };
+  //     setLocalEvents(events);
+  //   });
+  // };
+
+  // const logDeadlines = () => {
+  //   readDeadlines().then((deadlines) => {
+  //     // console.log(
+  //     //   "Local Deadlines -----------------------------------------------------------------"
+  //     // );
+  //     // console.log(deadlines);
+
+  //     setLocalDeadlines(deadlines);
+  //   });
+  // };
 
   const showToday = ({ formattedDate, textStyle }) => (
     <Text style={[textStyle, { fontWeight: "bold", fontSize: 13 }]}>
@@ -61,7 +75,7 @@ const Timetable = () => {
     <ActivityIndicator style={style} color={Colour.red} size="large" />
   );
 
-  // For debugging purposes
+  // For debugging purposes - force sinlge week
   const showFixedComponent = false;
 
   const onEventPress = ({
@@ -88,7 +102,32 @@ const Timetable = () => {
     Alert.alert(`${year}-${month}-${day} ${hour}:${minutes}:${seconds}`);
   };
 
-  if (localEvents.length === 0 || localDeadlines.length === 0) {
+  const EventsNav = () => {
+    navigation.navigate("Events");
+  };
+
+  const daysToggle = () => {
+    if (numDays === 7) {
+      setNumDays(1);
+      // Goto date
+      // } else if (numDays === 5) {
+      //   setNumDays(5);
+      //   // Goto Monday
+    } else {
+      setNumDays(7);
+      // Goto Monday - default sunday?
+    }
+  };
+
+  // if (localEvents.length === 0 || localDeadlines.length === 0) {
+  //   console.log("No data yet");
+  //   refreshBoolean = true;
+  // } else {
+  //   console.log("Data found");
+  //   refreshBoolean = false;
+  // }
+
+  if (localData.length === 0) {
     console.log("No data yet");
     refreshBoolean = true;
   } else {
@@ -98,14 +137,17 @@ const Timetable = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.topButtons}>
+        <Button title="Days" color="red" onPress={daysToggle} />
+        <Button title=" + " color="red" onPress={EventsNav} />
+      </View>
+
       <WeekView
-        // ref={(r) => {
-        //   componentRef = r;
-        // }}
-        events={localEvents}
+        events={localData}
         selectedDate={new Date()}
         TodayHeaderComponent={showToday}
-        numberOfDays={numbDays}
+        numberOfDays={numDays}
+        weekStartsOn={0} // Change to sunday when toggle back to 7, why?
         onEventPress={onEventPress}
         onGridClick={onGridClick}
         headerStyle={styles.header}
@@ -115,7 +157,7 @@ const Timetable = () => {
         formatDateHeader={showFixedComponent ? "ddd" : "ddd DD"}
         hoursInDisplay={8}
         timeStep={30}
-        startHour={9}
+        startHour={10}
         fixedHorizontally={showFixedComponent}
         showTitle={!showFixedComponent}
         showNowLine
@@ -132,10 +174,13 @@ export default Timetable;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
-    height: "100%",
     paddingTop: 40,
     backgroundColor: Colour.offWhite,
+  },
+  topButtons: {
+    padding: 5,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   header: {
     backgroundColor: Colour.blue,

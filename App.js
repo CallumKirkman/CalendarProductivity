@@ -1,11 +1,9 @@
 import React from "react";
 
-import OldTimetable from "./app/screens/main/OldTimetable";
-import Timetable from "./app/screens/main/Timetable";
-import Test from "./app/screens/main/Test";
+import MainStack from "./app/navigation/MainStack,";
 
 const App = () => {
-  return <Timetable />;
+  return <MainStack />;
 };
 
 export default App;

@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import deadlinesData from "./deadlinesData";
+import deadlinesData from "./DeadlinesData";
 
 const DEADLINES_KEY = "@deadlines_key";
 

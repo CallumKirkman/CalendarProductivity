@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import eventsData from "./eventsData";
+import eventsData from "./EventsData";
 
 const EVENTS_KEY = "@events_key";
 

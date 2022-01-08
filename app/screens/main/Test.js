@@ -3,10 +3,10 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import writeEvents from "../../components/writeEvents";
-import readEvents from "../../components/readEvents";
-import writeDeadlines from "../../components/writeDeadlines";
-import readDeadlines from "../../components/readDeadlines";
+import writeEvents from "../../components/WriteEvents";
+import readEvents from "../../components/ReadEvents";
+import writeDeadlines from "../../components/WriteDeadlines";
+import readDeadlines from "../../components/ReadDeadlines";
 
 const App = () => {
   const [data, setData] = useState("");
