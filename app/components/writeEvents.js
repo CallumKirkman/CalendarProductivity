@@ -4,9 +4,9 @@ import eventsData from "./EventsData";
 
 const EVENTS_KEY = "@events_key";
 
-const writeEvents = async () => {
+const writeEvents = async (data) => {
   try {
-    const jsonValue = JSON.stringify(eventsData);
+    const jsonValue = JSON.stringify(data);
     await AsyncStorage.setItem(EVENTS_KEY, jsonValue);
 
     alert("Data successfully saved");

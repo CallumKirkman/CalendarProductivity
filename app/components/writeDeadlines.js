@@ -4,9 +4,9 @@ import deadlinesData from "./DeadlinesData";
 
 const DEADLINES_KEY = "@deadlines_key";
 
-const writeDeadlines = async () => {
+const writeDeadlines = async (data) => {
   try {
-    const jsonValue = JSON.stringify(deadlinesData);
+    const jsonValue = JSON.stringify(data);
     await AsyncStorage.setItem(DEADLINES_KEY, jsonValue);
 
     alert("Data successfully saved");

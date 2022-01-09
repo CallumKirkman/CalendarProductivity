@@ -6,18 +6,25 @@ const EVENTS_KEY = "@events_key";
 
 const readEvents = async () => {
   try {
-    let jsonList = [];
     const jsonValue = await AsyncStorage.getItem(EVENTS_KEY);
-
-    if (jsonValue !== null) {
-      for (var i = 0; i < eventsData.length; i++) {
-        jsonList.push(eventsData[i]);
-      }
-      return jsonList;
-    }
+    return jsonValue != null ? JSON.parse(jsonValue) : null;
   } catch (e) {
-    alert("Failed to fetch the data from storage");
+    // error reading value
   }
+
+  // try {
+  //   let jsonList = [];
+  //   const jsonValue = await AsyncStorage.getItem(EVENTS_KEY);
+
+  //   if (jsonValue !== null) {
+  //     for (var i = 0; i < eventsData.length; i++) {
+  //       jsonList.push(eventsData[i]);
+  //     }
+  //     return jsonList;
+  //   }
+  // } catch (e) {
+  //   alert("Failed to fetch the data from storage");
+  // }
 };
 
 export default readEvents;

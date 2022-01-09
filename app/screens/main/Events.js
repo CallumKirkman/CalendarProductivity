@@ -17,38 +17,41 @@ import readDeadlines from "../../components/ReadDeadlines";
 import Colour from "../../static/Colour";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import EventsData from "../../components/EventsData";
+import DeadlinesData from "../../components/DeadlinesData";
 
 const Events = ({ navigation }) => {
   const [localEvents, setLocalEvents] = useState([]);
   const [localDeadlines, setLocalDeadlines] = useState([]);
 
-  const [selectedId, setSelectedId] = useState(null);
+  const [eventId, setEventId] = useState(null);
+  const [deadlineId, setDeadlineId] = useState(null);
 
   useEffect(() => {
-    logEvents();
-    logDeadlines();
-    // logData();
+    // logEvents();
+    // logDeadlines();
+    logData();
   }, []);
 
-  // const logData = () => {
-  //   readEvents().then((events) => {
-  //     // console.log(
-  //     //   "Local Events -----------------------------------------------------------------"
-  //     // );
-  //     // console.log(events);
+  const logData = () => {
+    readEvents().then((events) => {
+      // console.log(
+      //   "Local Events -----------------------------------------------------------------"
+      // );
+      // console.log(events);
 
-  //     setLocalEvents(events);
-  //   });
+      setLocalEvents(events);
+    });
 
-  //   readDeadlines().then((deadlines) => {
-  //     // console.log(
-  //     //   "Local Deadlines -----------------------------------------------------------------"
-  //     // );
-  //     // console.log(deadlines);
+    readDeadlines().then((deadlines) => {
+      // console.log(
+      //   "Local Deadlines -----------------------------------------------------------------"
+      // );
+      // console.log(deadlines);
 
-  //     setLocalDeadlines(deadlines);
-  //   });
-  // };
+      setLocalDeadlines(deadlines);
+    });
+  };
 
   const logEvents = () => {
     readEvents().then((events) => {
@@ -73,21 +76,27 @@ const Events = ({ navigation }) => {
   };
 
   const timetableNav = () => {
-    // Disable until events and deadlines
     navigation.navigate("Timetable");
   };
 
-  const writeAll = () => {
-    writeEvents();
-    writeDeadlines();
+  const logAll = () => {
+    logEvents();
+    logDeadlines();
+  };
+
+  const writeOld = () => {
+    writeEvents(EventsData);
+    writeDeadlines(DeadlinesData);
   };
 
   const addEvent = () => {
-    alert("Add event");
+    // alert("Add event");
+    navigation.navigate("EditEvent", { localEvents });
   };
 
   const addDeadline = () => {
-    alert("Add deadline");
+    // alert("Add deadline");
+    navigation.navigate("EditDeadline", { localDeadlines });
   };
 
   const clearStorage = async () => {
@@ -109,21 +118,18 @@ const Events = ({ navigation }) => {
     </TouchableOpacity>
   );
 
-  const renderItem = ({ item }) => {
+  const renderEventItem = ({ item }) => {
     const backgroundColour =
-      item.id === selectedId ? Colour.darkGray : Colour.lightGray;
-    const colour = item.id === selectedId ? Colour.white : Colour.black;
+      item.id === eventId ? Colour.darkGray : Colour.lightGray;
+    const colour = item.id === eventId ? Colour.white : Colour.black;
 
     return (
       <Item
         item={item}
         onPress={() => {
-          navigation.navigate("EditEvent", { eventTest: "Test event" });
-
-          // navigation.push("LocationTopNav", {
-          //   screen: "SelectedBeach",
-          //   params: { beachName: "Test" },
-          // });
+          setEventId(item.id);
+          // console.log(item);
+          navigation.navigate("EditEvent", { item, localEvents });
         }}
         backgroundColor={{ backgroundColor: backgroundColour }}
         textColor={{ color: colour }}
@@ -131,20 +137,44 @@ const Events = ({ navigation }) => {
     );
   };
 
+  const renderDeadlineItem = ({ item }) => {
+    const backgroundColour =
+      item.id === deadlineId ? Colour.darkGray : Colour.lightGray;
+    const colour = item.id === deadlineId ? Colour.white : Colour.black;
+
+    return (
+      <Item
+        item={item}
+        onPress={() => {
+          setDeadlineId(item.id);
+          // console.log(item);
+          navigation.navigate("EditDeadline", { item, localDeadlines });
+        }}
+        backgroundColor={{ backgroundColor: backgroundColour }}
+        textColor={{ color: colour }}
+      />
+    );
+  };
+
+  let submitBoolean = true;
+  if (localEvents.length > 0) {
+    submitBoolean = false;
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topButtons}>
-        <Button title="Add deadline" color="red" onPress={logDeadlines} />
-        <Button title="Add event" color="red" onPress={logEvents} />
+        <Button title="Add deadline" color="red" onPress={addDeadline} />
+        <Button title="Add event" color="red" onPress={addEvent} />
       </View>
 
       <View style={styles.topView}>
         <Text style={styles.headline}>Events</Text>
         <FlatList
           data={localEvents}
-          renderItem={renderItem}
+          renderItem={renderEventItem}
           keyExtractor={(item) => item.id}
-          extraData={selectedId}
+          extraData={eventId}
           ListEmptyComponent={
             <Text style={styles.listEmpty}>This list is currently empty</Text>
           }
@@ -154,9 +184,9 @@ const Events = ({ navigation }) => {
         <Text style={styles.headline}>Deadlines</Text>
         <FlatList
           data={localDeadlines}
-          renderItem={renderItem}
+          renderItem={renderDeadlineItem}
           keyExtractor={(item) => item.id}
-          extraData={selectedId}
+          extraData={deadlineId}
           ListEmptyComponent={
             <Text style={styles.listEmpty}>This list is currently empty</Text>
           }
@@ -164,8 +194,14 @@ const Events = ({ navigation }) => {
       </View>
 
       <View style={styles.topButtons}>
-        <Button title="Write" color="red" onPress={writeAll} />
-        <Button title="Submit" color="blue" onPress={timetableNav} />
+        <Button title="Log" color="red" onPress={logAll} />
+        <Button title="Write Old" color="green" onPress={writeOld} />
+        <Button
+          title="Submit"
+          disabled={submitBoolean}
+          color="blue"
+          onPress={timetableNav}
+        />
         <Button title="Clear" color="red" onPress={clearStorage} />
       </View>
     </SafeAreaView>

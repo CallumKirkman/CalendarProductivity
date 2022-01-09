@@ -20,8 +20,8 @@ import Colour from "../../static/Colour";
 import { createFixedWeekDate } from "react-native-week-view";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const EditEvent = ({ route, navigation }) => {
-  // const [eventItem, setEventItem] = useState("");
+const EditDeadline = ({ route, navigation }) => {
+  // const [deadlineItem, setDeadlineItem] = useState("");
   const [description, onDescriptionChange] = useState("");
   const [startDate, onStartDateChange] = useState("");
   const [endDate, onEndDateChange] = useState("");
@@ -39,7 +39,7 @@ const EditEvent = ({ route, navigation }) => {
     // console.log("Params not found!");
   }
 
-  let eventsArray = [
+  let deadlinesArray = [
     {
       id: 1,
       description: "Advanced Development",
@@ -114,11 +114,11 @@ const EditEvent = ({ route, navigation }) => {
     },
   ];
 
-  const eventsNav = () => {
+  const deadlinesNav = () => {
     navigation.navigate("Events");
   };
 
-  const submitEvent = () => {
+  const submitDeadline = () => {
     if (
       description &&
       startDate &&
@@ -128,10 +128,10 @@ const EditEvent = ({ route, navigation }) => {
       type != ""
     ) {
       if (paramsFound === true) {
-        const { item, localEvents } = route.params;
+        const { item, localDeadlines } = route.params;
 
         let entry = {
-          id: localEvents.length + 1,
+          id: localDeadlines.length + 1,
           description: description,
           startDate: startDate,
           endDate: endDate,
@@ -140,9 +140,9 @@ const EditEvent = ({ route, navigation }) => {
           type: type,
         };
 
-        localEvents.push(entry);
-        // console.log(localEvents);
-        writeEvents(localEvents);
+        localDeadlines.push(entry);
+        // console.log(localDeadlines);
+        writeDeadlines(localDeadlines);
       } else {
         let entry = [
           {
@@ -157,14 +157,14 @@ const EditEvent = ({ route, navigation }) => {
         ];
 
         // console.log(entry);
-        writeEvents(entry);
+        writeDeadlines(entry);
       }
     }
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Button title="Back" color="blue" onPress={eventsNav} />
+      <Button title="Back" color="blue" onPress={deadlinesNav} />
       {/* <TextInput
         style={styles.input}
         onChangeText={onChangeNumber}
@@ -179,7 +179,7 @@ const EditEvent = ({ route, navigation }) => {
         value={description}
         placeholder="Description"
         type="text"
-        onSubmitEditing={submitEvent}
+        onSubmitEditing={submitDeadline}
       />
       <TextInput
         style={styles.input}
@@ -187,7 +187,7 @@ const EditEvent = ({ route, navigation }) => {
         value={startDate}
         placeholder="Start date"
         type="date"
-        onSubmitEditing={submitEvent}
+        onSubmitEditing={submitDeadline}
       />
       <TextInput
         style={styles.input}
@@ -195,7 +195,7 @@ const EditEvent = ({ route, navigation }) => {
         value={endDate}
         placeholder="End date"
         type="date"
-        onSubmitEditing={submitEvent}
+        onSubmitEditing={submitDeadline}
       />
       <TextInput
         style={{
@@ -209,7 +209,7 @@ const EditEvent = ({ route, navigation }) => {
         value={colour}
         placeholder="Colour?"
         type="color"
-        onSubmitEditing={submitEvent}
+        onSubmitEditing={submitDeadline}
       />
       <TextInput
         style={styles.input}
@@ -217,7 +217,7 @@ const EditEvent = ({ route, navigation }) => {
         value={location}
         placeholder="Location"
         type="text"
-        onSubmitEditing={submitEvent}
+        onSubmitEditing={submitDeadline}
       />
       <TextInput
         style={styles.input}
@@ -225,7 +225,7 @@ const EditEvent = ({ route, navigation }) => {
         value={type}
         placeholder="Type"
         type="text"
-        onSubmitEditing={submitEvent}
+        onSubmitEditing={submitDeadline}
       />
 
       <Text>
@@ -234,21 +234,21 @@ const EditEvent = ({ route, navigation }) => {
       </Text>
       <Text />
 
-      {/* <Text>{JSON.stringify(eventItem)}</Text>
+      {/* <Text>{JSON.stringify(deadlineItem)}</Text>
       <Text /> */}
 
-      {/* <Text>id: {JSON.stringify(eventItem.id)}</Text>
-      <Text>description: {JSON.stringify(eventItem.description)}</Text>
-      <Text>startDate: {JSON.stringify(eventItem.startDate)}</Text>
-      <Text>endDate: {JSON.stringify(eventItem.endDate)}</Text>
-      <Text>color: {JSON.stringify(eventItem.color)}</Text>
-      <Text>location: {JSON.stringify(eventItem.location)}</Text>
-      <Text>type: {JSON.stringify(eventItem.type)}</Text> */}
+      {/* <Text>id: {JSON.stringify(deadlineItem.id)}</Text>
+      <Text>description: {JSON.stringify(deadlineItem.description)}</Text>
+      <Text>startDate: {JSON.stringify(deadlineItem.startDate)}</Text>
+      <Text>endDate: {JSON.stringify(deadlineItem.endDate)}</Text>
+      <Text>color: {JSON.stringify(deadlineItem.color)}</Text>
+      <Text>location: {JSON.stringify(deadlineItem.location)}</Text>
+      <Text>type: {JSON.stringify(deadlineItem.type)}</Text> */}
     </SafeAreaView>
   );
 };
 
-export default EditEvent;
+export default EditDeadline;
 
 const styles = StyleSheet.create({
   container: {
