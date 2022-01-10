@@ -38,7 +38,7 @@ const Events = ({ navigation }) => {
       // console.log(
       //   "Local Events -----------------------------------------------------------------"
       // );
-      // console.log(events);
+      console.log(events);
 
       setLocalEvents(events);
     });
@@ -47,46 +47,42 @@ const Events = ({ navigation }) => {
       // console.log(
       //   "Local Deadlines -----------------------------------------------------------------"
       // );
-      // console.log(deadlines);
+      console.log(deadlines);
 
       setLocalDeadlines(deadlines);
     });
   };
 
-  const logEvents = () => {
-    readEvents().then((events) => {
-      // console.log(
-      //   "Local Events -----------------------------------------------------------------"
-      // );
-      // console.log(events);
+  // const logEvents = () => {
+  //   readEvents().then((events) => {
+  //     // console.log(
+  //     //   "Local Events -----------------------------------------------------------------"
+  //     // );
+  //     // console.log(events);
 
-      setLocalEvents(events);
-    });
-  };
+  //     setLocalEvents(events);
+  //   });
+  // };
 
-  const logDeadlines = () => {
-    readDeadlines().then((deadlines) => {
-      // console.log(
-      //   "Local Deadlines -----------------------------------------------------------------"
-      // );
-      // console.log(deadlines);
+  // const logDeadlines = () => {
+  //   readDeadlines().then((deadlines) => {
+  //     // console.log(
+  //     //   "Local Deadlines -----------------------------------------------------------------"
+  //     // );
+  //     // console.log(deadlines);
 
-      setLocalDeadlines(deadlines);
-    });
-  };
+  //     setLocalDeadlines(deadlines);
+  //   });
+  // };
 
   const timetableNav = () => {
     navigation.navigate("Timetable");
   };
 
-  const logAll = () => {
-    logEvents();
-    logDeadlines();
-  };
-
   const writeOld = () => {
     writeEvents(EventsData);
     writeDeadlines(DeadlinesData);
+    logData();
   };
 
   const addEvent = () => {
@@ -194,7 +190,6 @@ const Events = ({ navigation }) => {
       </View>
 
       <View style={styles.topButtons}>
-        <Button title="Log" color="red" onPress={logAll} />
         <Button title="Write Old" color="green" onPress={writeOld} />
         <Button
           title="Submit"

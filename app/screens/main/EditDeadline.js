@@ -23,8 +23,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const EditDeadline = ({ route, navigation }) => {
   // const [deadlineItem, setDeadlineItem] = useState("");
   const [description, onDescriptionChange] = useState("");
-  const [startDate, onStartDateChange] = useState("");
-  const [endDate, onEndDateChange] = useState("");
+  const [startYear, onStartYearChange] = useState("");
+  const [startMonth, onStartMonthChange] = useState("");
+  const [startDay, onStartDayChange] = useState("");
+  const [startHour, onStartHourChange] = useState("");
+  const [startMinute, onStartMinuteChange] = useState("");
+  const [endYear, onEndYearChange] = useState("");
+  const [endMonth, onEndMonthChange] = useState("");
+  const [endDay, onEndDayChange] = useState("");
+  const [endHour, onEndHourChange] = useState("");
+  const [endMinute, onEndMinuteChange] = useState("");
   const [colour, onColourChange] = useState("");
   const [location, onLocationChange] = useState("");
   const [type, onTypeChange] = useState("");
@@ -39,81 +47,6 @@ const EditDeadline = ({ route, navigation }) => {
     // console.log("Params not found!");
   }
 
-  let deadlinesArray = [
-    {
-      id: 1,
-      description: "Advanced Development",
-      startDate: createFixedWeekDate("MON", 14),
-      endDate: createFixedWeekDate("MON", 16),
-      color: Colour.blue,
-      location: "P225",
-      type: "Lab",
-    },
-    {
-      id: 2,
-      description: "Software Q&T",
-      startDate: createFixedWeekDate("MON", 18),
-      endDate: createFixedWeekDate("MON", 19),
-      color: Colour.red,
-      location: "Lawrence",
-      type: "Lecture",
-    },
-    {
-      id: 3,
-      description: "Advanced Development",
-      startDate: createFixedWeekDate("TUE", 10),
-      endDate: createFixedWeekDate("TUE", 12),
-      color: Colour.blue,
-      location: "Lawrence",
-      type: "Lecture",
-    },
-    {
-      id: 4,
-      description: "Ubiquitous Computing",
-      startDate: createFixedWeekDate("TUE", 16),
-      endDate: createFixedWeekDate("TUE", 18),
-      color: Colour.green,
-      location: "P221",
-      type: "Lab",
-    },
-    {
-      id: 5,
-      description: "Software Q&T",
-      startDate: createFixedWeekDate("TUE", 18),
-      endDate: createFixedWeekDate("TUE", 19),
-      color: Colour.red,
-      location: "P227",
-      type: "Lab",
-    },
-    {
-      id: 6,
-      description: "Individual Project",
-      startDate: createFixedWeekDate("WED", 12),
-      endDate: createFixedWeekDate("WED", 14),
-      color: Colour.darkPurple,
-      location: "KG01",
-      type: "Lecture",
-    },
-    {
-      id: 7,
-      description: "Ubiquitous Computing",
-      startDate: createFixedWeekDate("WED", 14),
-      endDate: createFixedWeekDate("WED", 16),
-      color: Colour.green,
-      location: "P235",
-      type: "Lab",
-    },
-    {
-      id: 8,
-      description: "Software Q&T",
-      startDate: createFixedWeekDate("THU", 11),
-      endDate: createFixedWeekDate("THU", 12),
-      color: Colour.red,
-      location: "F112",
-      type: "Seminar",
-    },
-  ];
-
   const deadlinesNav = () => {
     navigation.navigate("Events");
   };
@@ -121,12 +54,45 @@ const EditDeadline = ({ route, navigation }) => {
   const submitDeadline = () => {
     if (
       description &&
-      startDate &&
-      endDate &&
+      startYear &&
+      startMonth &&
+      startDay &&
+      startHour &&
+      startMinute &&
+      endYear &&
+      endMonth &&
+      endDay &&
+      endHour &&
+      endMinute &&
       colour &&
       location &&
       type != ""
     ) {
+      let startInt;
+      let endInt;
+
+      if (startMonth.includes("0")) {
+        startInt = "0" + (startMonth - 1);
+      } else {
+        startInt = startMonth - 1;
+      }
+      let startDate = new Date(
+        startYear,
+        startInt,
+        startDay,
+        startHour,
+        startMinute
+      );
+
+      if (endMonth.includes("0")) {
+        endInt = "0" + (endMonth - 1);
+      } else {
+        endInt = endMonth - 1;
+      }
+      let endDate = new Date(endYear, endInt, endDay, endHour, endMinute);
+
+      let colour = Colour.black;
+
       if (paramsFound === true) {
         const { item, localDeadlines } = route.params;
 
@@ -143,6 +109,7 @@ const EditDeadline = ({ route, navigation }) => {
         localDeadlines.push(entry);
         // console.log(localDeadlines);
         writeDeadlines(localDeadlines);
+        navigation.navigate("Events");
       } else {
         let entry = [
           {
@@ -158,6 +125,7 @@ const EditDeadline = ({ route, navigation }) => {
 
         // console.log(entry);
         writeDeadlines(entry);
+        navigation.navigate("Events");
       }
     }
   };
@@ -177,26 +145,94 @@ const EditDeadline = ({ route, navigation }) => {
         style={styles.input}
         onChangeText={onDescriptionChange}
         value={description}
-        placeholder="Description"
+        placeholder="Example name"
         type="text"
         onSubmitEditing={submitDeadline}
       />
-      <TextInput
-        style={styles.input}
-        onChangeText={onStartDateChange}
-        value={startDate}
-        placeholder="Start date"
-        type="date"
-        onSubmitEditing={submitDeadline}
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={onEndDateChange}
-        value={endDate}
-        placeholder="End date"
-        type="date"
-        onSubmitEditing={submitDeadline}
-      />
+      <View style={styles.dateView}>
+        <TextInput
+          style={styles.input}
+          onChangeText={onStartYearChange}
+          value={startYear}
+          placeholder="YYYY"
+          type="date"
+          onSubmitEditing={submitDeadline}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={onStartMonthChange}
+          value={startMonth}
+          placeholder="MM"
+          type="date"
+          onSubmitEditing={submitDeadline}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={onStartDayChange}
+          value={startDay}
+          placeholder="DD"
+          type="date"
+          onSubmitEditing={submitDeadline}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={onStartHourChange}
+          value={startHour}
+          placeholder="hh"
+          type="date"
+          onSubmitEditing={submitDeadline}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={onStartMinuteChange}
+          value={startMinute}
+          placeholder="mm"
+          type="date"
+          onSubmitEditing={submitDeadline}
+        />
+      </View>
+      <View style={styles.dateView}>
+        <TextInput
+          style={styles.input}
+          onChangeText={onEndYearChange}
+          value={endYear}
+          placeholder="YYYY"
+          type="date"
+          onSubmitEditing={submitDeadline}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={onEndMonthChange}
+          value={endMonth}
+          placeholder="MM"
+          type="date"
+          onSubmitEditing={submitDeadline}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={onEndDayChange}
+          value={endDay}
+          placeholder="DD"
+          type="date"
+          onSubmitEditing={submitDeadline}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={onEndHourChange}
+          value={endHour}
+          placeholder="hh"
+          type="date"
+          onSubmitEditing={submitDeadline}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={onEndMinuteChange}
+          value={endMinute}
+          placeholder="mm"
+          type="date"
+          onSubmitEditing={submitDeadline}
+        />
+      </View>
       <TextInput
         style={{
           height: 30,
@@ -262,5 +298,10 @@ const styles = StyleSheet.create({
     margin: 10,
     borderWidth: 1,
     paddingLeft: 10,
+  },
+  dateView: {
+    flexDirection: "row",
+    // justifyContent: "space-between",
+    // backgroundColor: "purple",
   },
 });
