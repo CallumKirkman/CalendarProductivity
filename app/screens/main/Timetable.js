@@ -12,8 +12,8 @@ import {
 import WeekView from "react-native-week-view";
 
 import readData from "../../components/ReadData";
-// import readEvents from "../../components/readEvents";
-// import readDeadlines from "../../components/readDeadlines";
+// import readEvents from "../../components/ReadEvents";
+// import readDeadlines from "../../components/ReadDeadlines";
 import Colour from "../../static/Colour";
 
 const Timetable = ({ navigation }) => {
@@ -35,10 +35,19 @@ const Timetable = ({ navigation }) => {
   const logData = () => {
     readData().then((data) => {
       // console.log(
-      //   "Local data -----------------------------------------------------------------"
+      //   "Timetable data -----------------------------------------------------------------"
       // );
       // console.log(data);
 
+      for (let i = 0; i < data.length; i++) {
+        let newStartDate = new Date(data[i].startDate);
+        data[i].startDate = newStartDate;
+
+        let newEndDate = new Date(data[i].endDate);
+        data[i].endDate = newEndDate;
+      }
+
+      // console.log(data);
       setLocalData(data);
     });
   };

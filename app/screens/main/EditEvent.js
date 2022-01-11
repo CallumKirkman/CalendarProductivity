@@ -20,16 +20,31 @@ import Colour from "../../static/Colour";
 import { createFixedWeekDate } from "react-native-week-view";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import moment from "moment";
+
 const EditEvent = ({ route, navigation }) => {
   // const [eventItem, setEventItem] = useState("");
   const [description, onDescriptionChange] = useState("");
-  const [startDate, onStartDateChange] = useState("");
-  const [endDate, onEndDateChange] = useState("");
+  const [startDay, onStartDayChange] = useState("");
+  const [startHour, onStartHourChange] = useState("");
+  const [startMinute, onStartMinuteChange] = useState("");
+  const [endDay, onEndDayChange] = useState("");
+  const [endHour, onEndHourChange] = useState("");
+  const [endMinute, onEndMinuteChange] = useState("");
   const [colour, onColourChange] = useState("");
   const [location, onLocationChange] = useState("");
   const [type, onTypeChange] = useState("");
 
   let paramsFound = false;
+
+  const createDate = (day, hours, minutes = 0, seconds = 0) => {
+    const date = moment();
+    date.isoWeekday(day);
+    date.hours(hours);
+    date.minutes(minutes);
+    date.seconds(seconds);
+    return date.toDate();
+  };
 
   if (route.params) {
     // console.log("Got params!");
@@ -39,81 +54,6 @@ const EditEvent = ({ route, navigation }) => {
     // console.log("Params not found!");
   }
 
-  let eventsArray = [
-    {
-      id: 1,
-      description: "Advanced Development",
-      startDate: createFixedWeekDate("MON", 14),
-      endDate: createFixedWeekDate("MON", 16),
-      color: Colour.blue,
-      location: "P225",
-      type: "Lab",
-    },
-    {
-      id: 2,
-      description: "Software Q&T",
-      startDate: createFixedWeekDate("MON", 18),
-      endDate: createFixedWeekDate("MON", 19),
-      color: Colour.red,
-      location: "Lawrence",
-      type: "Lecture",
-    },
-    {
-      id: 3,
-      description: "Advanced Development",
-      startDate: createFixedWeekDate("TUE", 10),
-      endDate: createFixedWeekDate("TUE", 12),
-      color: Colour.blue,
-      location: "Lawrence",
-      type: "Lecture",
-    },
-    {
-      id: 4,
-      description: "Ubiquitous Computing",
-      startDate: createFixedWeekDate("TUE", 16),
-      endDate: createFixedWeekDate("TUE", 18),
-      color: Colour.green,
-      location: "P221",
-      type: "Lab",
-    },
-    {
-      id: 5,
-      description: "Software Q&T",
-      startDate: createFixedWeekDate("TUE", 18),
-      endDate: createFixedWeekDate("TUE", 19),
-      color: Colour.red,
-      location: "P227",
-      type: "Lab",
-    },
-    {
-      id: 6,
-      description: "Individual Project",
-      startDate: createFixedWeekDate("WED", 12),
-      endDate: createFixedWeekDate("WED", 14),
-      color: Colour.darkPurple,
-      location: "KG01",
-      type: "Lecture",
-    },
-    {
-      id: 7,
-      description: "Ubiquitous Computing",
-      startDate: createFixedWeekDate("WED", 14),
-      endDate: createFixedWeekDate("WED", 16),
-      color: Colour.green,
-      location: "P235",
-      type: "Lab",
-    },
-    {
-      id: 8,
-      description: "Software Q&T",
-      startDate: createFixedWeekDate("THU", 11),
-      endDate: createFixedWeekDate("THU", 12),
-      color: Colour.red,
-      location: "F112",
-      type: "Seminar",
-    },
-  ];
-
   const eventsNav = () => {
     navigation.navigate("Events");
   };
@@ -121,20 +61,29 @@ const EditEvent = ({ route, navigation }) => {
   const submitEvent = () => {
     if (
       description &&
-      startDate &&
-      endDate &&
+      startDay &&
+      startHour &&
+      startMinute &&
+      endDay &&
+      endHour &&
+      endMinute &&
       colour &&
       location &&
       type != ""
     ) {
+      let startDate = createDate(startDay, startHour, startMinute);
+      let endDate = createDate(endDay, endHour, endMinute);
+
+      // let colour = Colour.black; // Hex colour
+
       if (paramsFound === true) {
         const { item, localEvents } = route.params;
 
         let entry = {
           id: localEvents.length + 1,
           description: description,
-          startDate: startDate,
-          endDate: endDate,
+          startDate: createFixedWeekDate(startDay, startHour, startMinute),
+          endDate: createFixedWeekDate(endDay, endHour, endMinute),
           color: colour,
           location: location,
           type: type,
@@ -143,13 +92,14 @@ const EditEvent = ({ route, navigation }) => {
         localEvents.push(entry);
         // console.log(localEvents);
         writeEvents(localEvents);
+        navigation.navigate("Events");
       } else {
         let entry = [
           {
             id: 1,
             description: description,
-            startDate: startDate,
-            endDate: endDate,
+            startDate: createFixedWeekDate(startDay, startHour, startMinute),
+            endDate: createFixedWeekDate(endDay, endHour, endMinute),
             color: colour,
             location: location,
             type: type,
@@ -158,21 +108,16 @@ const EditEvent = ({ route, navigation }) => {
 
         // console.log(entry);
         writeEvents(entry);
+        navigation.navigate("Events");
       }
+    } else {
+      alert("Please fill out all forms");
     }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <Button title="Back" color="blue" onPress={eventsNav} />
-      {/* <TextInput
-        style={styles.input}
-        onChangeText={onChangeNumber}
-        value={number}
-        placeholder="ID?"
-        type="number"
-        keyboardType="numeric"
-      /> */}
       <TextInput
         style={styles.input}
         onChangeText={onDescriptionChange}
@@ -181,22 +126,58 @@ const EditEvent = ({ route, navigation }) => {
         type="text"
         onSubmitEditing={submitEvent}
       />
-      <TextInput
-        style={styles.input}
-        onChangeText={onStartDateChange}
-        value={startDate}
-        placeholder="Start date"
-        type="date"
-        onSubmitEditing={submitEvent}
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={onEndDateChange}
-        value={endDate}
-        placeholder="End date"
-        type="date"
-        onSubmitEditing={submitEvent}
-      />
+      <View style={styles.dateView}>
+        <TextInput
+          style={styles.input}
+          onChangeText={onStartDayChange}
+          value={startDay}
+          placeholder="Day"
+          type="date"
+          onSubmitEditing={submitEvent}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={onStartHourChange}
+          value={startHour}
+          placeholder="Hour"
+          type="date"
+          onSubmitEditing={submitEvent}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={onStartMinuteChange}
+          value={startMinute}
+          placeholder="Minute"
+          type="date"
+          onSubmitEditing={submitEvent}
+        />
+      </View>
+      <View style={styles.dateView}>
+        <TextInput
+          style={styles.input}
+          onChangeText={onEndDayChange}
+          value={endDay}
+          placeholder="Day"
+          type="date"
+          onSubmitEditing={submitEvent}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={onEndHourChange}
+          value={endHour}
+          placeholder="Hour"
+          type="date"
+          onSubmitEditing={submitEvent}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={onEndMinuteChange}
+          value={endMinute}
+          placeholder="Minute"
+          type="date"
+          onSubmitEditing={submitEvent}
+        />
+      </View>
       <TextInput
         style={{
           height: 30,
@@ -261,6 +242,11 @@ const styles = StyleSheet.create({
     height: 30,
     margin: 10,
     borderWidth: 1,
-    paddingLeft: 10,
+    paddingHorizontal: 5,
+  },
+  dateView: {
+    flexDirection: "row",
+    // justifyContent: "space-between",
+    // backgroundColor: "purple",
   },
 });

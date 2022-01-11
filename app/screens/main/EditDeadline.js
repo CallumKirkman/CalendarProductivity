@@ -39,6 +39,17 @@ const EditDeadline = ({ route, navigation }) => {
 
   let paramsFound = false;
 
+  const createDate = (date) => {
+    let int = 0;
+
+    if (date.includes("0")) {
+      int = "0" + (date - 1);
+    } else {
+      int = date - 1;
+    }
+    return int;
+  };
+
   if (route.params) {
     // console.log("Got params!");
     paramsFound = true;
@@ -68,30 +79,17 @@ const EditDeadline = ({ route, navigation }) => {
       location &&
       type != ""
     ) {
-      let startInt;
-      let endInt;
+      let startM = createDate(startMonth);
+      let endM = createDate(endMonth);
 
-      if (startMonth.includes("0")) {
-        startInt = "0" + (startMonth - 1);
-      } else {
-        startInt = startMonth - 1;
-      }
       let startDate = new Date(
         startYear,
-        startInt,
+        startM,
         startDay,
         startHour,
         startMinute
       );
-
-      if (endMonth.includes("0")) {
-        endInt = "0" + (endMonth - 1);
-      } else {
-        endInt = endMonth - 1;
-      }
-      let endDate = new Date(endYear, endInt, endDay, endHour, endMinute);
-
-      let colour = Colour.black;
+      let endDate = new Date(endYear, endM, endDay, endHour, endMinute);
 
       if (paramsFound === true) {
         const { item, localDeadlines } = route.params;
@@ -127,20 +125,14 @@ const EditDeadline = ({ route, navigation }) => {
         writeDeadlines(entry);
         navigation.navigate("Events");
       }
+    } else {
+      alert("Please fill out all forms");
     }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <Button title="Back" color="blue" onPress={deadlinesNav} />
-      {/* <TextInput
-        style={styles.input}
-        onChangeText={onChangeNumber}
-        value={number}
-        placeholder="ID?"
-        type="number"
-        keyboardType="numeric"
-      /> */}
       <TextInput
         style={styles.input}
         onChangeText={onDescriptionChange}
@@ -297,7 +289,7 @@ const styles = StyleSheet.create({
     height: 30,
     margin: 10,
     borderWidth: 1,
-    paddingLeft: 10,
+    paddingHorizontal: 5,
   },
   dateView: {
     flexDirection: "row",
