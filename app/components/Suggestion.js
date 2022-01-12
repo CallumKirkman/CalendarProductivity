@@ -253,8 +253,6 @@ const Suggestion = () => {
       sleepTime,
       weekEvents
     );
-
-    console.log("Monday", mondayFreeHours);
   } // End of code
 
   return (
