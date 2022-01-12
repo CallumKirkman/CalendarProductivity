@@ -31,9 +31,9 @@ const Suggestion = () => {
       }
     });
 
-    console.log("Split -------");
-    console.log(startDates);
-    console.log(endDates);
+    // console.log("Split -------");
+    // console.log(startDates);
+    // console.log(endDates);
     return { startDates, endDates };
   };
 
@@ -148,8 +148,8 @@ const Suggestion = () => {
           weekEvents.saturday.push(pair);
       }
     }
-    console.log("Week split ---------");
-    console.log(weekEvents);
+    // console.log("Week split ---------");
+    // console.log(weekEvents);
     return weekEvents;
   };
 
@@ -253,6 +253,8 @@ const Suggestion = () => {
       sleepTime,
       weekEvents
     );
+
+    console.log("Monday", mondayFreeHours);
   } // End of code
 
   return (

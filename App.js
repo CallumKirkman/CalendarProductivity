@@ -3,10 +3,10 @@ import React from "react";
 import MainStack from "./app/navigation/MainStack,";
 import Timetable from "./app/screens/main/Timetable";
 import Events from "./app/screens/main/Events";
-import NewSuggestions from "./app/components/NewSuggestion";
+import Suggestions from "./app/components/Suggestion";
 
 const App = () => {
-  return <NewSuggestions />;
+  return <Suggestions />;
 };
 
 export default App;
