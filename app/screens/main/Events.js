@@ -7,6 +7,9 @@ import {
   Button,
   TouchableOpacity,
   FlatList,
+  Alert,
+  Modal,
+  Pressable,
 } from "react-native";
 
 import writeEvents from "../../components/WriteEvents";
@@ -76,7 +79,7 @@ const Events = ({ navigation }) => {
   // };
 
   const timetableNav = () => {
-    navigation.push("Timetable");
+    navigation.push("Suggestion");
   };
 
   const writeOld = () => {

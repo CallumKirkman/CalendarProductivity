@@ -6,7 +6,7 @@ import Events from "./app/screens/main/Events";
 import Suggestions from "./app/components/Suggestion";
 
 const App = () => {
-  return <Suggestions />;
+  return <MainStack />;
 };
 
 export default App;

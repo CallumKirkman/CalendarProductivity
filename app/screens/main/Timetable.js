@@ -12,6 +12,7 @@ import {
 import WeekView from "react-native-week-view";
 
 import readData from "../../components/ReadData";
+// import Suggestion from "../../components/Suggestion";
 // import readEvents from "../../components/ReadEvents";
 // import readDeadlines from "../../components/ReadDeadlines";
 import Colour from "../../static/Colour";

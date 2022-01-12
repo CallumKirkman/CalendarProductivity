@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { SafeAreaView, Text } from "react-native";
 
+import { createFixedWeekDate } from "react-native-week-view";
+
 import readEvents from "./ReadEvents";
 import readDeadlines from "./ReadDeadlines";
+import Colour from "../static/Colour";
+import writeSuggestions from "./WriteSuggestions";
 
-const Suggestion = () => {
+const Suggestion = ({ navigation }) => {
   const [eventTimes, setEventTimes] = useState([]);
   const [deadlineTimes, setDeadlineTimes] = useState([]);
 
@@ -19,22 +23,95 @@ const Suggestion = () => {
     getData();
   }, []);
 
-  const splitDates = (times) => {
-    let startDates = [];
-    let endDates = [];
+  const sendSuggestions = (
+    sunday,
+    monday,
+    tuesday,
+    wednesday,
+    thursday,
+    friday,
+    saturday
+  ) => {
+    let suggestionArray = [];
 
-    times.filter((element, index) => {
-      if (index % 2 === 0) {
-        startDates.push(times[index]);
-      } else {
-        endDates.push(times[index]);
-      }
-    });
+    // let suggestionTemplate = {
+    //   description: "Revise 1 hour",
+    //   startDate: createFixedWeekDate("MON", 14),
+    //   endDate: createFixedWeekDate("MON", 16),
+    //   color: Colour.mediumGray,
+    // };
 
-    // console.log("Split -------");
-    // console.log(startDates);
-    // console.log(endDates);
-    return { startDates, endDates };
+    // console.log("friday =", friday);
+    // for (let i = 0; i < monday.length; i++) {
+    //   // console.log(monday[i]);
+    //   // console.log(monday[i] + 1);
+    //   suggestionTemplate.startDate = createFixedWeekDate("MON", monday[i]);
+    //   suggestionTemplate.endDate = createFixedWeekDate("MON", monday[i] + 1);
+    //   console.log(suggestionTemplate);
+    //   suggestionArray.push(suggestionTemplate);
+    // }
+
+    for (let i = 0; i < sunday.length; i++) {
+      suggestionArray.push({
+        description: "Revise 1 hour",
+        startDate: createFixedWeekDate("SUN", sunday[i]),
+        endDate: createFixedWeekDate("SUN", sunday[i] + 1),
+        color: Colour.mediumGray,
+      });
+    }
+    for (let i = 0; i < monday.length; i++) {
+      suggestionArray.push({
+        description: "Revise 1 hour",
+        startDate: createFixedWeekDate("MON", monday[i]),
+        endDate: createFixedWeekDate("MON", monday[i] + 1),
+        color: Colour.mediumGray,
+      });
+    }
+    for (let i = 0; i < tuesday.length; i++) {
+      suggestionArray.push({
+        description: "Revise 1 hour",
+        startDate: createFixedWeekDate("TUE", tuesday[i]),
+        endDate: createFixedWeekDate("TUE", tuesday[i] + 1),
+        color: Colour.mediumGray,
+      });
+    }
+    for (let i = 0; i < wednesday.length; i++) {
+      suggestionArray.push({
+        description: "Revise 1 hour",
+        startDate: createFixedWeekDate("WED", wednesday[i]),
+        endDate: createFixedWeekDate("WED", wednesday[i] + 1),
+        color: Colour.mediumGray,
+      });
+    }
+    for (let i = 0; i < thursday.length; i++) {
+      suggestionArray.push({
+        description: "Revise 1 hour",
+        startDate: createFixedWeekDate("THU", thursday[i]),
+        endDate: createFixedWeekDate("THU", thursday[i] + 1),
+        color: Colour.mediumGray,
+      });
+    }
+    for (let i = 0; i < friday.length; i++) {
+      suggestionArray.push({
+        description: "Revise 1 hour",
+        startDate: createFixedWeekDate("FRI", friday[i]),
+        endDate: createFixedWeekDate("FRI", friday[i] + 1),
+        color: Colour.mediumGray,
+      });
+    }
+    for (let i = 0; i < saturday.length; i++) {
+      suggestionArray.push({
+        description: "Revise 1 hour",
+        startDate: createFixedWeekDate("SAT", saturday[i]),
+        endDate: createFixedWeekDate("SAT", saturday[i] + 1),
+        color: Colour.mediumGray,
+      });
+    }
+
+    // console.log(suggestionArray);
+    // console.log("Suggestion successfully ran!");
+    writeSuggestions(suggestionArray);
+    navigation.push("Timetable");
   };
 
   const getData = () => {
@@ -83,6 +160,24 @@ const Suggestion = () => {
     // console.log("Format dates --------------");
     // console.log(eventTimes);
     // console.log(deadlineTimes);
+  };
+
+  const splitDates = (times) => {
+    let startDates = [];
+    let endDates = [];
+
+    times.filter((element, index) => {
+      if (index % 2 === 0) {
+        startDates.push(times[index]);
+      } else {
+        endDates.push(times[index]);
+      }
+    });
+
+    // console.log("Split -------");
+    // console.log(startDates);
+    // console.log(endDates);
+    return { startDates, endDates };
   };
 
   const splitDays = (dates) => {
@@ -179,20 +274,17 @@ const Suggestion = () => {
     return filtered;
   };
 
-  const createFreeHours = (day, hours, week) => {
-    // console.log("Create free hours -----");
-    // console.log(week);
-    // console.log(hours);
-    // // For each active hour
-    // for (let i = 0; i < hours.length; i++) {
-    //   // For each event in week
-    //   for (let x in week.monday) {
-    //     if (week.monday[x] <= hours[i] && hours[i] < week.monday[x]) {
-    //       // console.log("Hour busy");
-    //     }
-    //   }
-    //   // console.log("Hour free");
-    // }
+  const suggestEveryOtherHour = (times) => {
+    let result = [];
+    times.filter((element, index) => {
+      if (index % 2 === 0) {
+        // result.push(times[index]); // return even index
+      } else {
+        result.push(times[index]); // return odd index
+      }
+    });
+
+    return result;
   };
 
   if (eventTimes.length === 0 || deadlineTimes.length === 0) {
@@ -253,14 +345,47 @@ const Suggestion = () => {
       sleepTime,
       weekEvents
     );
+
+    // console.log(sundayFreeHours);
+    let sundaySuggestion = suggestEveryOtherHour(sundayFreeHours);
+    // console.log(sundaySuggestion);
+
+    // console.log(mondayFreeHours);
+    let mondaySuggestion = suggestEveryOtherHour(mondayFreeHours);
+    // console.log(mondaySuggestion);
+
+    // console.log(tuesdayFreeHours);
+    let tuesdaySuggestion = suggestEveryOtherHour(tuesdayFreeHours);
+    // console.log(tuesdaySuggestion);
+
+    // console.log(wednesdayFreeHours);
+    let wednesdaySuggestion = suggestEveryOtherHour(wednesdayFreeHours);
+    // console.log(wednesdaySuggestion);
+
+    // console.log(thursdayFreeHours);
+    let thursdaySuggestion = suggestEveryOtherHour(thursdayFreeHours);
+    // console.log(thursdaySuggestion);
+
+    // console.log(fridayFreeHours);
+    let fridaySuggestion = suggestEveryOtherHour(fridayFreeHours);
+    // console.log(fridaySuggestion);
+
+    // console.log(saturdayFreeHours);
+    let saturdaySuggestion = suggestEveryOtherHour(saturdayFreeHours);
+    // console.log(saturdaySuggestion);
+
+    sendSuggestions(
+      sundaySuggestion,
+      mondaySuggestion,
+      tuesdaySuggestion,
+      wednesdaySuggestion,
+      thursdaySuggestion,
+      fridaySuggestion,
+      saturdaySuggestion
+    );
   } // End of code
 
-  return (
-    // Suggested revise times
-    <SafeAreaView>
-      <Text>Suggestions</Text>
-    </SafeAreaView>
-  );
+  return null;
 };
 
 export default Suggestion;

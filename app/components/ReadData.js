@@ -5,6 +5,7 @@ import deadlinesData from "./DeadlinesData";
 
 const EVENTS_KEY = "@events_key";
 const DEADLINES_KEY = "@deadlines_key";
+const SUGGESTION_KEY = "@suggestion_key";
 
 const readData = async () => {
   try {
@@ -40,11 +41,30 @@ const readData = async () => {
     //   }
     // }
 
+    // console.log("Suggestions values =========");
+    const suggestionsValue = await AsyncStorage.getItem(SUGGESTION_KEY);
+    // jsonList.push(values);
+    // console.log(suggestionsData.length);
+    // console.log(suggestionsValue);
+
+    let newSuggestionsValue =
+      suggestionsValue != null ? JSON.parse(suggestionsValue) : [];
+    // console.log(newSuggestionsValue);
+
+    // if (suggestionsValue !== null) {
+    //   for (var i = 0; i < suggestionsData.length; i++) {
+    //     jsonList.push(suggestionsData[i]);
+    //   }
+    // }
+
     // console.log("All values =========");
     // let allValues = eventsValue.concat(deadlinesValue);
     // console.log(allValues);
 
-    let parseArray = newEventsValue.concat(newDeadlinesValue);
+    let parseArray = newEventsValue.concat(
+      newSuggestionsValue,
+      newDeadlinesValue
+    );
 
     // console.log("parseArray --------");
     // console.log(parseArray);

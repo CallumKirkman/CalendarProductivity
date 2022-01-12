@@ -8,6 +8,7 @@ import Timetable from "../screens/main/Timetable";
 import Events from "../screens/main/Events";
 import EditEvent from "../screens/main/EditEvent";
 import EditDeadline from "../screens/main/EditDeadline";
+import Suggestion from "../components/Suggestion";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +20,7 @@ const MainStack = () => {
         <Stack.Screen name="EditEvent" component={EditEvent} />
         <Stack.Screen name="EditDeadline" component={EditDeadline} />
         <Stack.Screen name="Timetable" component={Timetable} />
+        <Stack.Screen name="Suggestion" component={Suggestion} />
       </Stack.Navigator>
     </NavigationContainer>
   );
