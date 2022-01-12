@@ -38,7 +38,7 @@ const Events = ({ navigation }) => {
       // console.log(
       //   "Local Events -----------------------------------------------------------------"
       // );
-      console.log(events);
+      // console.log(events);
 
       setLocalEvents(events);
     });
@@ -47,7 +47,7 @@ const Events = ({ navigation }) => {
       // console.log(
       //   "Local Deadlines -----------------------------------------------------------------"
       // );
-      console.log(deadlines);
+      // console.log(deadlines);
 
       setLocalDeadlines(deadlines);
     });
@@ -76,13 +76,18 @@ const Events = ({ navigation }) => {
   // };
 
   const timetableNav = () => {
-    navigation.navigate("Timetable");
+    navigation.push("Timetable");
   };
 
   const writeOld = () => {
     writeEvents(EventsData);
     writeDeadlines(DeadlinesData);
     logData();
+  };
+
+  const editSleepWake = () => {
+    alert("Sleep wake");
+    // navigation.navigate("SleepWake", {});
   };
 
   const addEvent = () => {
@@ -124,7 +129,6 @@ const Events = ({ navigation }) => {
         item={item}
         onPress={() => {
           setEventId(item.id);
-          // console.log(item);
           navigation.navigate("EditEvent", { item, localEvents });
         }}
         backgroundColor={{ backgroundColor: backgroundColour }}
@@ -143,7 +147,6 @@ const Events = ({ navigation }) => {
         item={item}
         onPress={() => {
           setDeadlineId(item.id);
-          // console.log(item);
           navigation.navigate("EditDeadline", { item, localDeadlines });
         }}
         backgroundColor={{ backgroundColor: backgroundColour }}
@@ -161,6 +164,7 @@ const Events = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.topButtons}>
         <Button title="Add deadline" color="red" onPress={addDeadline} />
+        <Button title="Edit Sleep/Wake" color="blue" onPress={editSleepWake} />
         <Button title="Add event" color="red" onPress={addEvent} />
       </View>
 

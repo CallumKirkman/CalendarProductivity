@@ -17,8 +17,6 @@ import readData from "../../components/ReadData";
 import Colour from "../../static/Colour";
 
 const Timetable = ({ navigation }) => {
-  console.log("Timetable");
-
   // const [localEvents, setLocalEvents] = useState([]);
   // const [localDeadlines, setLocalDeadlines] = useState([]);
   const [localData, setLocalData] = useState([]);
@@ -27,12 +25,12 @@ const Timetable = ({ navigation }) => {
   let refreshBoolean = false;
 
   useEffect(() => {
-    // logEvents();
-    // logDeadlines();
-    logData();
+    // getEvents();
+    // getDeadlines();
+    getData();
   }, []);
 
-  const logData = () => {
+  const getData = () => {
     readData().then((data) => {
       // console.log(
       //   "Timetable data -----------------------------------------------------------------"
@@ -52,7 +50,7 @@ const Timetable = ({ navigation }) => {
     });
   };
 
-  // const logEvents = () => {
+  // const getEvents = () => {
   //   readEvents().then((events) => {
   //     // console.log(
   //     //   "Local Events -----------------------------------------------------------------"
@@ -63,7 +61,7 @@ const Timetable = ({ navigation }) => {
   //   });
   // };
 
-  // const logDeadlines = () => {
+  // const getDeadlines = () => {
   //   readDeadlines().then((deadlines) => {
   //     // console.log(
   //     //   "Local Deadlines -----------------------------------------------------------------"

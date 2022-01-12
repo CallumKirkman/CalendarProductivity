@@ -107,7 +107,7 @@ const EditDeadline = ({ route, navigation }) => {
         localDeadlines.push(entry);
         // console.log(localDeadlines);
         writeDeadlines(localDeadlines);
-        navigation.navigate("Events");
+        navigation.push("Events");
       } else {
         let entry = [
           {
@@ -123,7 +123,7 @@ const EditDeadline = ({ route, navigation }) => {
 
         // console.log(entry);
         writeDeadlines(entry);
-        navigation.navigate("Events");
+        navigation.push("Events");
       }
     } else {
       alert("Please fill out all forms");

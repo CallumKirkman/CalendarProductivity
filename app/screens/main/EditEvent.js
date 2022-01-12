@@ -92,7 +92,7 @@ const EditEvent = ({ route, navigation }) => {
         localEvents.push(entry);
         // console.log(localEvents);
         writeEvents(localEvents);
-        navigation.navigate("Events");
+        navigation.push("Events");
       } else {
         let entry = [
           {
@@ -108,7 +108,7 @@ const EditEvent = ({ route, navigation }) => {
 
         // console.log(entry);
         writeEvents(entry);
-        navigation.navigate("Events");
+        navigation.push("Events");
       }
     } else {
       alert("Please fill out all forms");
