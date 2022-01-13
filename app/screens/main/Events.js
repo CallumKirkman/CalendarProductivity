@@ -108,7 +108,6 @@ const Events = ({ navigation }) => {
       await AsyncStorage.clear();
       setLocalEvents("");
       setLocalDeadlines("");
-      alert("Storage successfully cleared!");
     } catch (e) {
       alert("Failed to clear the async storage.");
     }
@@ -196,15 +195,15 @@ const Events = ({ navigation }) => {
         />
       </View>
 
+      <Button title="Dummy data" color="green" onPress={writeOld} />
       <View style={styles.topButtons}>
-        <Button title="Write Old" color="green" onPress={writeOld} />
+        <Button title="Clear" color="red" onPress={clearStorage} />
         <Button
           title="Submit"
           disabled={submitBoolean}
           color="blue"
           onPress={timetableNav}
         />
-        <Button title="Clear" color="red" onPress={clearStorage} />
       </View>
     </SafeAreaView>
   );
@@ -220,6 +219,7 @@ const styles = StyleSheet.create({
     // backgroundColor: Colour.darkGray,
   },
   topButtons: {
+    marginTop: 5,
     flexDirection: "row",
     justifyContent: "space-between",
     // backgroundColor: "purple",
@@ -235,6 +235,7 @@ const styles = StyleSheet.create({
     // backgroundColor: Colour.red,
   },
   headline: {
+    paddingTop: 10,
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 22,

@@ -132,6 +132,8 @@ const EditDeadline = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Text style={styles.maintitle}>Add Deadline</Text>
+      <Text style={styles.maintitle}>(fixed date)</Text>
       <Button title="Back" color="blue" onPress={deadlinesNav} />
       <TextInput
         style={styles.input}
@@ -142,6 +144,7 @@ const EditDeadline = ({ route, navigation }) => {
         onSubmitEditing={submitDeadline}
       />
       <View style={styles.dateView}>
+        <Text style={styles.startTitle}>Start Date: </Text>
         <TextInput
           style={styles.input}
           onChangeText={onStartYearChange}
@@ -149,6 +152,7 @@ const EditDeadline = ({ route, navigation }) => {
           placeholder="YYYY"
           type="date"
           onSubmitEditing={submitDeadline}
+          keyboardType="numeric"
         />
         <TextInput
           style={styles.input}
@@ -157,6 +161,7 @@ const EditDeadline = ({ route, navigation }) => {
           placeholder="MM"
           type="date"
           onSubmitEditing={submitDeadline}
+          keyboardType="numeric"
         />
         <TextInput
           style={styles.input}
@@ -165,6 +170,7 @@ const EditDeadline = ({ route, navigation }) => {
           placeholder="DD"
           type="date"
           onSubmitEditing={submitDeadline}
+          keyboardType="numeric"
         />
         <TextInput
           style={styles.input}
@@ -173,6 +179,7 @@ const EditDeadline = ({ route, navigation }) => {
           placeholder="hh"
           type="date"
           onSubmitEditing={submitDeadline}
+          keyboardType="numeric"
         />
         <TextInput
           style={styles.input}
@@ -181,9 +188,11 @@ const EditDeadline = ({ route, navigation }) => {
           placeholder="mm"
           type="date"
           onSubmitEditing={submitDeadline}
+          keyboardType="numeric"
         />
       </View>
       <View style={styles.dateView}>
+        <Text style={styles.endTitle}>End Date: </Text>
         <TextInput
           style={styles.input}
           onChangeText={onEndYearChange}
@@ -191,6 +200,7 @@ const EditDeadline = ({ route, navigation }) => {
           placeholder="YYYY"
           type="date"
           onSubmitEditing={submitDeadline}
+          keyboardType="numeric"
         />
         <TextInput
           style={styles.input}
@@ -199,6 +209,7 @@ const EditDeadline = ({ route, navigation }) => {
           placeholder="MM"
           type="date"
           onSubmitEditing={submitDeadline}
+          keyboardType="numeric"
         />
         <TextInput
           style={styles.input}
@@ -207,6 +218,7 @@ const EditDeadline = ({ route, navigation }) => {
           placeholder="DD"
           type="date"
           onSubmitEditing={submitDeadline}
+          keyboardType="numeric"
         />
         <TextInput
           style={styles.input}
@@ -215,6 +227,7 @@ const EditDeadline = ({ route, navigation }) => {
           placeholder="hh"
           type="date"
           onSubmitEditing={submitDeadline}
+          keyboardType="numeric"
         />
         <TextInput
           style={styles.input}
@@ -223,21 +236,23 @@ const EditDeadline = ({ route, navigation }) => {
           placeholder="mm"
           type="date"
           onSubmitEditing={submitDeadline}
+          keyboardType="numeric"
         />
       </View>
       <TextInput
         style={{
-          height: 30,
-          margin: 10,
+          height: 40,
+          margin: 15,
           borderWidth: 1,
-          paddingLeft: 10,
+          paddingHorizontal: 5,
           backgroundColor: colour,
         }}
         onChangeText={onColourChange}
         value={colour}
-        placeholder="Colour?"
+        placeholder="Colour"
         type="color"
         onSubmitEditing={submitDeadline}
+        autoCapitalize="none"
       />
       <TextInput
         style={styles.input}
@@ -255,12 +270,6 @@ const EditDeadline = ({ route, navigation }) => {
         type="text"
         onSubmitEditing={submitDeadline}
       />
-
-      <Text>
-        id: number auto? description: text startDate: date endDate: date color:
-        colour location: text type: text
-      </Text>
-      <Text />
 
       {/* <Text>{JSON.stringify(deadlineItem)}</Text>
       <Text /> */}
@@ -281,19 +290,34 @@ export default EditDeadline;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
+    paddingTop: 60,
     padding: 15,
     // backgroundColor: Colour.darkGray,
   },
   input: {
-    height: 30,
-    margin: 10,
+    height: 40,
+    margin: 15,
     borderWidth: 1,
     paddingHorizontal: 5,
   },
+  maintitle: {
+    textAlign: "center",
+    // padding: 5,
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  startTitle: {
+    paddingTop: 25,
+    paddingLeft: 10,
+  },
+  endTitle: {
+    paddingTop: 25,
+    paddingLeft: 10,
+    marginRight: 7,
+  },
   dateView: {
     flexDirection: "row",
-    // justifyContent: "space-between",
+    justifyContent: "space-between",
     // backgroundColor: "purple",
   },
 });

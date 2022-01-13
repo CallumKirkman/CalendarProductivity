@@ -74,8 +74,6 @@ const EditEvent = ({ route, navigation }) => {
       let startDate = createDate(startDay, startHour, startMinute);
       let endDate = createDate(endDay, endHour, endMinute);
 
-      // let colour = Colour.black; // Hex colour
-
       if (paramsFound === true) {
         const { item, localEvents } = route.params;
 
@@ -117,6 +115,8 @@ const EditEvent = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Text style={styles.maintitle}>Add Event</Text>
+      <Text style={styles.maintitle}>(week date)</Text>
       <Button title="Back" color="blue" onPress={eventsNav} />
       <TextInput
         style={styles.input}
@@ -127,11 +127,12 @@ const EditEvent = ({ route, navigation }) => {
         onSubmitEditing={submitEvent}
       />
       <View style={styles.dateView}>
+        <Text style={styles.startTitle}>Start Day:</Text>
         <TextInput
           style={styles.input}
           onChangeText={onStartDayChange}
           value={startDay}
-          placeholder="Day"
+          placeholder=" Day "
           type="date"
           onSubmitEditing={submitEvent}
         />
@@ -142,6 +143,7 @@ const EditEvent = ({ route, navigation }) => {
           placeholder="Hour"
           type="date"
           onSubmitEditing={submitEvent}
+          keyboardType="numeric"
         />
         <TextInput
           style={styles.input}
@@ -150,14 +152,16 @@ const EditEvent = ({ route, navigation }) => {
           placeholder="Minute"
           type="date"
           onSubmitEditing={submitEvent}
+          keyboardType="numeric"
         />
       </View>
       <View style={styles.dateView}>
+        <Text style={styles.endTitle}>End Day:</Text>
         <TextInput
           style={styles.input}
           onChangeText={onEndDayChange}
           value={endDay}
-          placeholder="Day"
+          placeholder=" Day "
           type="date"
           onSubmitEditing={submitEvent}
         />
@@ -168,6 +172,7 @@ const EditEvent = ({ route, navigation }) => {
           placeholder="Hour"
           type="date"
           onSubmitEditing={submitEvent}
+          keyboardType="numeric"
         />
         <TextInput
           style={styles.input}
@@ -176,21 +181,23 @@ const EditEvent = ({ route, navigation }) => {
           placeholder="Minute"
           type="date"
           onSubmitEditing={submitEvent}
+          keyboardType="numeric"
         />
       </View>
       <TextInput
         style={{
-          height: 30,
+          height: 40,
           margin: 10,
           borderWidth: 1,
-          paddingLeft: 10,
+          paddingHorizontal: 5,
           backgroundColor: colour,
         }}
         onChangeText={onColourChange}
         value={colour}
-        placeholder="Colour?"
+        placeholder="Colour"
         type="color"
         onSubmitEditing={submitEvent}
+        autoCapitalize="none"
       />
       <TextInput
         style={styles.input}
@@ -208,12 +215,6 @@ const EditEvent = ({ route, navigation }) => {
         type="text"
         onSubmitEditing={submitEvent}
       />
-
-      <Text>
-        id: number auto? description: text startDate: date endDate: date color:
-        colour location: text type: text
-      </Text>
-      <Text />
 
       {/* <Text>{JSON.stringify(eventItem)}</Text>
       <Text /> */}
@@ -234,19 +235,34 @@ export default EditEvent;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
+    paddingTop: 60,
     padding: 15,
     // backgroundColor: Colour.darkGray,
   },
   input: {
-    height: 30,
+    height: 40,
     margin: 10,
     borderWidth: 1,
     paddingHorizontal: 5,
   },
+  maintitle: {
+    textAlign: "center",
+    // padding: 5,
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  startTitle: {
+    paddingTop: 20,
+    paddingLeft: 10,
+  },
+  endTitle: {
+    paddingTop: 20,
+    paddingLeft: 10,
+    marginRight: 7,
+  },
   dateView: {
     flexDirection: "row",
-    // justifyContent: "space-between",
+    justifyContent: "space-between",
     // backgroundColor: "purple",
   },
 });

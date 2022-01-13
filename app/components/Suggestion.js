@@ -56,7 +56,7 @@ const Suggestion = ({ navigation }) => {
         description: "Revise 1 hour",
         startDate: createFixedWeekDate("SUN", sunday[i]),
         endDate: createFixedWeekDate("SUN", sunday[i] + 1),
-        color: Colour.mediumGray,
+        color: "#E7E7E7",
       });
     }
     for (let i = 0; i < monday.length; i++) {
@@ -64,7 +64,7 @@ const Suggestion = ({ navigation }) => {
         description: "Revise 1 hour",
         startDate: createFixedWeekDate("MON", monday[i]),
         endDate: createFixedWeekDate("MON", monday[i] + 1),
-        color: Colour.mediumGray,
+        color: "#E7E7E7",
       });
     }
     for (let i = 0; i < tuesday.length; i++) {
@@ -72,7 +72,7 @@ const Suggestion = ({ navigation }) => {
         description: "Revise 1 hour",
         startDate: createFixedWeekDate("TUE", tuesday[i]),
         endDate: createFixedWeekDate("TUE", tuesday[i] + 1),
-        color: Colour.mediumGray,
+        color: "#E7E7E7",
       });
     }
     for (let i = 0; i < wednesday.length; i++) {
@@ -80,7 +80,7 @@ const Suggestion = ({ navigation }) => {
         description: "Revise 1 hour",
         startDate: createFixedWeekDate("WED", wednesday[i]),
         endDate: createFixedWeekDate("WED", wednesday[i] + 1),
-        color: Colour.mediumGray,
+        color: "#E7E7E7",
       });
     }
     for (let i = 0; i < thursday.length; i++) {
@@ -88,7 +88,7 @@ const Suggestion = ({ navigation }) => {
         description: "Revise 1 hour",
         startDate: createFixedWeekDate("THU", thursday[i]),
         endDate: createFixedWeekDate("THU", thursday[i] + 1),
-        color: Colour.mediumGray,
+        color: "#E7E7E7",
       });
     }
     for (let i = 0; i < friday.length; i++) {
@@ -96,7 +96,7 @@ const Suggestion = ({ navigation }) => {
         description: "Revise 1 hour",
         startDate: createFixedWeekDate("FRI", friday[i]),
         endDate: createFixedWeekDate("FRI", friday[i] + 1),
-        color: Colour.mediumGray,
+        color: "#E7E7E7",
       });
     }
     for (let i = 0; i < saturday.length; i++) {
@@ -104,7 +104,7 @@ const Suggestion = ({ navigation }) => {
         description: "Revise 1 hour",
         startDate: createFixedWeekDate("SAT", saturday[i]),
         endDate: createFixedWeekDate("SAT", saturday[i] + 1),
-        color: Colour.mediumGray,
+        color: "#E7E7E7",
       });
     }
 
