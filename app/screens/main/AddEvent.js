@@ -100,8 +100,7 @@ const EditEvent = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.maintitle}>Add Event</Text>
-      <Text style={styles.maintitle}>(week date)</Text>
+      <Text style={styles.maintitle}>Add Event (week date)</Text>
       <Button title="Back" color="blue" onPress={eventsNav} />
       <TextInput
         style={styles.input}
@@ -200,6 +199,7 @@ const EditEvent = ({ route, navigation }) => {
         type="text"
         onSubmitEditing={submitEvent}
       />
+      <Button title="Submit" color="green" onPress={submitEvent} />
     </SafeAreaView>
   );
 };
@@ -222,6 +222,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     fontWeight: "bold",
+    padding: 5,
   },
   startTitle: {
     paddingTop: 20,

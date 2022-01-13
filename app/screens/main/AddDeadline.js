@@ -118,8 +118,7 @@ const EditDeadline = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.maintitle}>Add Deadline</Text>
-      <Text style={styles.maintitle}>(fixed date)</Text>
+      <Text style={styles.maintitle}>Add Deadline (fixed date)</Text>
       <Button title="Back" color="blue" onPress={deadlinesNav} />
       <TextInput
         style={styles.input}
@@ -256,6 +255,7 @@ const EditDeadline = ({ route, navigation }) => {
         type="text"
         onSubmitEditing={submitDeadline}
       />
+      <Button title="Submit" color="green" onPress={submitDeadline} />
     </SafeAreaView>
   );
 };
@@ -278,6 +278,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     fontWeight: "bold",
+    padding: 5,
   },
   startTitle: {
     paddingTop: 25,
