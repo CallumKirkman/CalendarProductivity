@@ -13,7 +13,6 @@ import {
 
 import writeEvents from "../../components/WriteEvents";
 import writeDeadlines from "../../components/WriteDeadlines";
-// import readData from "../../components/readData";
 import readEvents from "../../components/ReadEvents";
 import readDeadlines from "../../components/ReadDeadlines";
 import Colour from "../../static/Colour";
@@ -36,8 +35,6 @@ const Events = ({ navigation }) => {
   const [restTime, onRestTimeChange] = useState("");
 
   useEffect(() => {
-    // logEvents();
-    // logDeadlines();
     logData();
   }, []);
 
@@ -72,12 +69,10 @@ const Events = ({ navigation }) => {
   };
 
   const addEvent = () => {
-    // alert("Add event");
     navigation.navigate("EditEvent", { localEvents });
   };
 
   const addDeadline = () => {
-    // alert("Add deadline");
     navigation.navigate("EditDeadline", { localDeadlines });
   };
 
@@ -102,7 +97,6 @@ const Events = ({ navigation }) => {
       personalRequirements.push(sleepTime);
       personalRequirements.push(restTime);
 
-      // console.log(personalRequirements);
       writeRequirements(personalRequirements);
     } else {
       alert("Please fill out all forms");
@@ -155,7 +149,6 @@ const Events = ({ navigation }) => {
 
   let submitBoolean = true;
   if (localEvents.length > 0) {
-    //&& localDeadlines.length > 0
     submitBoolean = false;
   }
 
@@ -254,9 +247,10 @@ const Events = ({ navigation }) => {
         />
       </View>
 
-      <Button title="Dummy data" color="green" onPress={writeDummy} />
       <View style={styles.topButtons}>
         <Button title="Clear" color="red" onPress={clearStorage} />
+        {/* Dummy data for testing purposes to save time */}
+        <Button title="Dummy data" color="green" onPress={writeDummy} />
         <Button
           title="Submit"
           disabled={submitBoolean}
@@ -275,30 +269,25 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 40,
     padding: 15,
-    // backgroundColor: Colour.darkGray,
   },
   topButtons: {
     marginTop: 5,
     flexDirection: "row",
     justifyContent: "space-between",
-    // backgroundColor: "purple",
   },
   topView: {
     flex: 1,
     marginTop: 5,
-    // backgroundColor: Colour.red,
   },
   bottomView: {
     flex: 1,
     marginTop: 20,
-    // backgroundColor: Colour.red,
   },
   headline: {
     paddingTop: 10,
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 22,
-    // backgroundColor: "yellow",
   },
   item: {
     padding: 5,
@@ -359,6 +348,5 @@ const styles = StyleSheet.create({
   rowView: {
     flexDirection: "row",
     justifyContent: "flex-start",
-    // backgroundColor: "purple",
   },
 });

@@ -12,32 +12,20 @@ import {
 import WeekView from "react-native-week-view";
 
 import readData from "../../components/ReadData";
-// import Suggestion from "../../components/Suggestion";
-// import readEvents from "../../components/ReadEvents";
-// import readDeadlines from "../../components/ReadDeadlines";
 import Colour from "../../static/Colour";
 
 const Timetable = ({ navigation }) => {
-  // const [localEvents, setLocalEvents] = useState([]);
-  // const [localDeadlines, setLocalDeadlines] = useState([]);
   const [localData, setLocalData] = useState([]);
   const [numDays, setNumDays] = useState(7);
 
   let refreshBoolean = false;
 
   useEffect(() => {
-    // getEvents();
-    // getDeadlines();
     getData();
   }, []);
 
   const getData = () => {
     readData().then((data) => {
-      // console.log(
-      //   "Timetable data -----------------------------------------------------------------"
-      // );
-      // console.log(data);
-
       for (let i = 0; i < data.length; i++) {
         let newStartDate = new Date(data[i].startDate);
         data[i].startDate = newStartDate;
@@ -46,32 +34,13 @@ const Timetable = ({ navigation }) => {
         data[i].endDate = newEndDate;
       }
 
+      // console.log(
+      //   "Timetable data -----------------------------------------------------------------"
+      // );
       // console.log(data);
       setLocalData(data);
     });
   };
-
-  // const getEvents = () => {
-  //   readEvents().then((events) => {
-  //     // console.log(
-  //     //   "Local Events -----------------------------------------------------------------"
-  //     // );
-  //     // console.log(events);
-
-  //     setLocalEvents(events);
-  //   });
-  // };
-
-  // const getDeadlines = () => {
-  //   readDeadlines().then((deadlines) => {
-  //     // console.log(
-  //     //   "Local Deadlines -----------------------------------------------------------------"
-  //     // );
-  //     // console.log(deadlines);
-
-  //     setLocalDeadlines(deadlines);
-  //   });
-  // };
 
   const showToday = ({ formattedDate, textStyle }) => (
     <Text style={[textStyle, { fontWeight: "bold", fontSize: 13 }]}>
@@ -83,7 +52,7 @@ const Timetable = ({ navigation }) => {
     <ActivityIndicator style={style} color={Colour.red} size="large" />
   );
 
-  // For debugging purposes - force sinlge week
+  // For debugging purposes - force single week
   const showFixedComponent = false;
 
   const onEventPress = ({
@@ -99,17 +68,6 @@ const Timetable = ({ navigation }) => {
     );
   };
 
-  const onGridClick = (event, startHour, date) => {
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1; // zero-based
-    const day = date.getDate();
-    const hour = date.getHours();
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
-
-    Alert.alert(`${year}-${month}-${day} ${hour}:${minutes}:${seconds}`);
-  };
-
   const EventsNav = () => {
     navigation.navigate("Events");
   };
@@ -117,23 +75,10 @@ const Timetable = ({ navigation }) => {
   const daysToggle = () => {
     if (numDays === 7) {
       setNumDays(1);
-      // Goto date
-      // } else if (numDays === 5) {
-      //   setNumDays(5);
-      //   // Goto Monday
     } else {
       setNumDays(7);
-      // Goto Monday - default sunday?
     }
   };
-
-  // if (localEvents.length === 0 || localDeadlines.length === 0) {
-  //   console.log("No data yet");
-  //   refreshBoolean = true;
-  // } else {
-  //   console.log("Data found");
-  //   refreshBoolean = false;
-  // }
 
   if (localData.length === 0) {
     console.log("No data yet");
@@ -157,7 +102,6 @@ const Timetable = ({ navigation }) => {
         numberOfDays={numDays}
         weekStartsOn={0} // Change to sunday when toggle back to 7, why?
         onEventPress={onEventPress}
-        onGridClick={onGridClick}
         headerStyle={styles.header}
         headerTextStyle={styles.headerText}
         hourTextStyle={styles.hourText}
@@ -169,7 +113,6 @@ const Timetable = ({ navigation }) => {
         fixedHorizontally={showFixedComponent}
         showTitle={!showFixedComponent}
         showNowLine
-        // onDragEvent={onDragEvent}
         isRefreshing={refreshBoolean}
         RefreshComponent={showRefresh}
       />

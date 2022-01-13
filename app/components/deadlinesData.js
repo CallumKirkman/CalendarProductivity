@@ -28,15 +28,4 @@ export default [
     location: "Exam building",
     type: "Assessment",
   },
-  // {
-  //   color: "#000000",
-  //   description: "Test deadline",
-  //   startDate: new Date(2022, 1, 14, 14, 0),
-  //   endDate: new Date(2022, 1, 14, 15, 0),
-  //   // endDate: "2022-01-14T17:00:00.000Z",
-  //   id: 4,
-  //   location: "location",
-  //   // startDate: "2022-01-14T16:00:00.000Z",
-  //   type: "type",
-  // },
 ];

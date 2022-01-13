@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,19 +9,12 @@ import {
 } from "react-native";
 
 import writeEvents from "../../components/WriteEvents";
-import writeDeadlines from "../../components/WriteDeadlines";
-// import readData from "../../components/readData";
-import readEvents from "../../components/ReadEvents";
-import readDeadlines from "../../components/ReadDeadlines";
-import Colour from "../../static/Colour";
 
 import { createFixedWeekDate } from "react-native-week-view";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import moment from "moment";
 
 const EditEvent = ({ route, navigation }) => {
-  // const [eventItem, setEventItem] = useState("");
   const [description, onDescriptionChange] = useState("");
   const [startDay, onStartDayChange] = useState("");
   const [startHour, onStartHourChange] = useState("");
@@ -47,7 +40,6 @@ const EditEvent = ({ route, navigation }) => {
   if (route.params) {
     // console.log("Got params!");
     paramsFound = true;
-    // console.log(route.params);
   } else {
     // console.log("Params not found!");
   }
@@ -69,9 +61,6 @@ const EditEvent = ({ route, navigation }) => {
       location &&
       type != ""
     ) {
-      let startDate = createDate(startDay, startHour, startMinute);
-      let endDate = createDate(endDay, endHour, endMinute);
-
       if (paramsFound === true) {
         const { item, localEvents } = route.params;
 
@@ -86,7 +75,6 @@ const EditEvent = ({ route, navigation }) => {
         };
 
         localEvents.push(entry);
-        // console.log(localEvents);
         writeEvents(localEvents);
         navigation.push("Events");
       } else {
@@ -102,7 +90,6 @@ const EditEvent = ({ route, navigation }) => {
           },
         ];
 
-        // console.log(entry);
         writeEvents(entry);
         navigation.push("Events");
       }
@@ -185,7 +172,7 @@ const EditEvent = ({ route, navigation }) => {
       <TextInput
         style={{
           height: 40,
-          margin: 10,
+          margin: 15,
           borderWidth: 1,
           paddingHorizontal: 5,
           backgroundColor: colour,
@@ -213,17 +200,6 @@ const EditEvent = ({ route, navigation }) => {
         type="text"
         onSubmitEditing={submitEvent}
       />
-
-      {/* <Text>{JSON.stringify(eventItem)}</Text>
-      <Text /> */}
-
-      {/* <Text>id: {JSON.stringify(eventItem.id)}</Text>
-      <Text>description: {JSON.stringify(eventItem.description)}</Text>
-      <Text>startDate: {JSON.stringify(eventItem.startDate)}</Text>
-      <Text>endDate: {JSON.stringify(eventItem.endDate)}</Text>
-      <Text>color: {JSON.stringify(eventItem.color)}</Text>
-      <Text>location: {JSON.stringify(eventItem.location)}</Text>
-      <Text>type: {JSON.stringify(eventItem.type)}</Text> */}
     </SafeAreaView>
   );
 };
@@ -235,17 +211,15 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 60,
     padding: 15,
-    // backgroundColor: Colour.darkGray,
   },
   input: {
     height: 40,
-    margin: 10,
+    margin: 15,
     borderWidth: 1,
     paddingHorizontal: 5,
   },
   maintitle: {
     textAlign: "center",
-    // padding: 5,
     fontSize: 18,
     fontWeight: "bold",
   },
@@ -261,6 +235,5 @@ const styles = StyleSheet.create({
   dateView: {
     flexDirection: "row",
     justifyContent: "space-between",
-    // backgroundColor: "purple",
   },
 });

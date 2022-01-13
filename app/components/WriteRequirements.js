@@ -6,8 +6,6 @@ const writeRequirements = async (data) => {
   try {
     const jsonValue = JSON.stringify(data);
     await AsyncStorage.setItem(REQUIREMENTS_KEY, jsonValue);
-
-    // alert("Data successfully saved");
   } catch (e) {
     alert("Failed to save the data to the storage");
   }

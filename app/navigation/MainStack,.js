@@ -3,11 +3,10 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import Test from "../screens/main/Test";
 import Timetable from "../screens/main/Timetable";
 import Events from "../screens/main/Events";
-import EditEvent from "../screens/main/EditEvent";
-import EditDeadline from "../screens/main/EditDeadline";
+import AddEvent from "../screens/main/AddEvent";
+import AddDeadline from "../screens/main/AddDeadline";
 import Suggestion from "../components/Suggestion";
 
 const Stack = createNativeStackNavigator();
@@ -17,8 +16,8 @@ const MainStack = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Events" component={Events} />
-        <Stack.Screen name="EditEvent" component={EditEvent} />
-        <Stack.Screen name="EditDeadline" component={EditDeadline} />
+        <Stack.Screen name="EditEvent" component={AddEvent} />
+        <Stack.Screen name="EditDeadline" component={AddDeadline} />
         <Stack.Screen name="Timetable" component={Timetable} />
         <Stack.Screen name="Suggestion" component={Suggestion} />
       </Stack.Navigator>

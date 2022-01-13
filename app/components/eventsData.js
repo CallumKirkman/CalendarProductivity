@@ -75,15 +75,4 @@ export default [
     location: "F112",
     type: "Seminar",
   },
-  // {
-  //   color: "#117A65",
-  //   description: "Test",
-  //   startDate: createFixedWeekDate("THU", 13),
-  //   endDate: createFixedWeekDate("THU", 15),
-  //   // endDate: "2022-01-13T15:00:00.147Z",
-  //   id: 9,
-  //   location: "location",
-  //   // startDate: "2022-01-13T13:00:00.141Z",
-  //   type: "type",
-  // },
 ];
