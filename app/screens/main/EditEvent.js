@@ -6,8 +6,6 @@ import {
   TextInput,
   View,
   Button,
-  TouchableOpacity,
-  FlatList,
 } from "react-native";
 
 import writeEvents from "../../components/WriteEvents";

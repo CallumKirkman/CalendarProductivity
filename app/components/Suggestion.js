@@ -5,19 +5,14 @@ import { createFixedWeekDate } from "react-native-week-view";
 
 import readEvents from "./ReadEvents";
 import readDeadlines from "./ReadDeadlines";
+import readRequirements from "./ReadRequirements";
 import Colour from "../static/Colour";
 import writeSuggestions from "./WriteSuggestions";
 
 const Suggestion = ({ navigation }) => {
   const [eventTimes, setEventTimes] = useState([]);
   const [deadlineTimes, setDeadlineTimes] = useState([]);
-
-  // Get times from user
-  let wakeupTime = 8; // 8am
-  let sleepTime = 23; // 11pm
-
-  let dayHours = 24 - wakeupTime - (24 - sleepTime);
-  let weekHours = 7 * dayHours;
+  const [localRequirements, setLocalRequirements] = useState([]);
 
   useEffect(() => {
     getData();
@@ -115,6 +110,25 @@ const Suggestion = ({ navigation }) => {
   };
 
   const getData = () => {
+    readRequirements().then((data) => {
+      let dataArray = [];
+
+      for (let i = 0; i < data.length; i++) {
+        dataArray.push(data[i]);
+      }
+
+      if (dataArray === undefined || dataArray.length == 0) {
+        console.log("No data, setting default");
+        dataArray.push(8);
+        dataArray.push(23);
+        dataArray.push(1);
+      }
+
+      setLocalRequirements(dataArray);
+      // console.log("User requirements -------------");
+      // console.log(dataArray);
+    });
+
     readEvents().then((events) => {
       let eventTimes = [];
 
@@ -291,6 +305,25 @@ const Suggestion = ({ navigation }) => {
     console.log("No data yet");
   } else {
     console.log("Data found");
+
+    // Get times from user
+    let wakeupTime = localRequirements[0]; // 8am
+    let sleepTime = localRequirements[1]; // 11pm
+    let restTime = localRequirements[2]; // 1 hour
+
+    let number = parseInt(wakeupTime);
+    wakeupTime = number;
+    number = parseInt(sleepTime);
+    sleepTime = number;
+    number = parseInt(restTime);
+    restTime = number;
+
+    // console.log("wakeup", wakeupTime);
+    // console.log(typeof wakeupTime);
+    // console.log("sleep", sleepTime);
+    // console.log(typeof sleepTime);
+    // console.log("rest", restTime);
+    // console.log(typeof restTime);
 
     // Format strings to dates
     dateFormat();

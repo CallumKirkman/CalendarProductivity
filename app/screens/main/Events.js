@@ -7,9 +7,8 @@ import {
   Button,
   TouchableOpacity,
   FlatList,
-  Alert,
   Modal,
-  Pressable,
+  TextInput,
 } from "react-native";
 
 import writeEvents from "../../components/WriteEvents";
@@ -22,6 +21,7 @@ import Colour from "../../static/Colour";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import EventsData from "../../components/EventsData";
 import DeadlinesData from "../../components/DeadlinesData";
+import writeRequirements from "../../components/WriteRequirements";
 
 const Events = ({ navigation }) => {
   const [localEvents, setLocalEvents] = useState([]);
@@ -29,6 +29,11 @@ const Events = ({ navigation }) => {
 
   const [eventId, setEventId] = useState(null);
   const [deadlineId, setDeadlineId] = useState(null);
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [wakeTime, onWakeTimeChange] = useState("");
+  const [sleepTime, onSleepTimeChange] = useState("");
+  const [restTime, onRestTimeChange] = useState("");
 
   useEffect(() => {
     // logEvents();
@@ -56,41 +61,14 @@ const Events = ({ navigation }) => {
     });
   };
 
-  // const logEvents = () => {
-  //   readEvents().then((events) => {
-  //     // console.log(
-  //     //   "Local Events -----------------------------------------------------------------"
-  //     // );
-  //     // console.log(events);
-
-  //     setLocalEvents(events);
-  //   });
-  // };
-
-  // const logDeadlines = () => {
-  //   readDeadlines().then((deadlines) => {
-  //     // console.log(
-  //     //   "Local Deadlines -----------------------------------------------------------------"
-  //     // );
-  //     // console.log(deadlines);
-
-  //     setLocalDeadlines(deadlines);
-  //   });
-  // };
-
   const timetableNav = () => {
     navigation.push("Suggestion");
   };
 
-  const writeOld = () => {
+  const writeDummy = () => {
     writeEvents(EventsData);
     writeDeadlines(DeadlinesData);
     logData();
-  };
-
-  const editSleepWake = () => {
-    alert("Sleep wake");
-    // navigation.navigate("SleepWake", {});
   };
 
   const addEvent = () => {
@@ -110,6 +88,24 @@ const Events = ({ navigation }) => {
       setLocalDeadlines("");
     } catch (e) {
       alert("Failed to clear the async storage.");
+    }
+  };
+
+  const submitRequirements = () => {
+    if (wakeTime && sleepTime && restTime != "") {
+      if (modalVisible) {
+        setModalVisible(!modalVisible);
+      }
+
+      let personalRequirements = [];
+      personalRequirements.push(wakeTime);
+      personalRequirements.push(sleepTime);
+      personalRequirements.push(restTime);
+
+      // console.log(personalRequirements);
+      writeRequirements(personalRequirements);
+    } else {
+      alert("Please fill out all forms");
     }
   };
 
@@ -159,6 +155,7 @@ const Events = ({ navigation }) => {
 
   let submitBoolean = true;
   if (localEvents.length > 0) {
+    //&& localDeadlines.length > 0
     submitBoolean = false;
   }
 
@@ -166,9 +163,71 @@ const Events = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.topButtons}>
         <Button title="Add deadline" color="red" onPress={addDeadline} />
-        <Button title="Edit Sleep/Wake" color="blue" onPress={editSleepWake} />
+        <Button
+          title="Edit Sleep/Wake"
+          color="blue"
+          onPress={() => setModalVisible(true)}
+        />
         <Button title="Add event" color="red" onPress={addEvent} />
       </View>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Persoanl requirements</Text>
+            <View style={styles.rowView}>
+              <Text style={styles.inputText}>Wake time</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={onWakeTimeChange}
+                value={wakeTime}
+                placeholder="8"
+                type="text"
+                keyboardType="numeric"
+              />
+            </View>
+            <View style={styles.rowView}>
+              <Text style={styles.inputText}>Sleep time</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={onSleepTimeChange}
+                value={sleepTime}
+                placeholder="23"
+                type="text"
+                keyboardType="numeric"
+              />
+            </View>
+            <View style={styles.rowView}>
+              <Text style={styles.inputText}>Break hour</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={onRestTimeChange}
+                value={restTime}
+                placeholder="1"
+                type="text"
+                keyboardType="numeric"
+              />
+            </View>
+            <Button
+              title="Submit"
+              color="blue"
+              onPress={submitRequirements}
+            ></Button>
+            <Button
+              title="Close"
+              color="red"
+              onPress={() => setModalVisible(false)}
+            ></Button>
+          </View>
+        </View>
+      </Modal>
 
       <View style={styles.topView}>
         <Text style={styles.headline}>Events</Text>
@@ -195,7 +254,7 @@ const Events = ({ navigation }) => {
         />
       </View>
 
-      <Button title="Dummy data" color="green" onPress={writeOld} />
+      <Button title="Dummy data" color="green" onPress={writeDummy} />
       <View style={styles.topButtons}>
         <Button title="Clear" color="red" onPress={clearStorage} />
         <Button
@@ -255,5 +314,51 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 25,
     marginTop: 70,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+  },
+  inputText: {
+    paddingTop: 22,
+    padding: 5,
+  },
+  input: {
+    height: 40,
+    marginVertical: 10,
+    marginHorizontal: 5,
+    borderWidth: 1,
+    paddingHorizontal: 5,
+  },
+  rowView: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    // backgroundColor: "purple",
   },
 });
