@@ -3,16 +3,17 @@ import {
   SafeAreaView,
   View,
   Button,
-  StyleSheet,
   Text,
   Alert,
   ActivityIndicator,
 } from "react-native";
 
+import readData from "../../components/ReadData";
+
 import WeekView from "react-native-week-view";
 
-import readData from "../../components/ReadData";
 import Colour from "../../static/Colour";
+import styles from "../../static/Styles";
 
 const Timetable = ({ navigation }) => {
   const [localData, setLocalData] = useState([]);
@@ -89,10 +90,10 @@ const Timetable = ({ navigation }) => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.timetableContainer}>
       <View style={styles.topButtons}>
-        <Button title="Days" color="red" onPress={daysToggle} />
-        <Button title=" + " color="red" onPress={EventsNav} />
+        <Button title="Days" color={Colour.red} onPress={daysToggle} />
+        <Button title=" + " color={Colour.red} onPress={EventsNav} />
       </View>
 
       <WeekView
@@ -121,30 +122,3 @@ const Timetable = ({ navigation }) => {
 };
 
 export default Timetable;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 40,
-    backgroundColor: Colour.offWhite,
-  },
-  topButtons: {
-    padding: 5,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  header: {
-    backgroundColor: Colour.blue,
-    borderColor: Colour.black,
-  },
-  headerText: {
-    color: Colour.white,
-  },
-  hourText: {
-    color: Colour.black,
-  },
-  eventContainer: {
-    borderWidth: 1,
-    borderColor: Colour.black,
-  },
-});

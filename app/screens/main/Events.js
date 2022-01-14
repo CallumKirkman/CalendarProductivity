@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
-  StyleSheet,
   Text,
   View,
   Button,
@@ -15,12 +14,14 @@ import writeEvents from "../../components/WriteEvents";
 import writeDeadlines from "../../components/WriteDeadlines";
 import readEvents from "../../components/ReadEvents";
 import readDeadlines from "../../components/ReadDeadlines";
-import Colour from "../../static/Colour";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import EventsData from "../../components/EventsData";
 import DeadlinesData from "../../components/DeadlinesData";
 import writeRequirements from "../../components/WriteRequirements";
+
+import Colour from "../../static/Colour";
+import styles from "../../static/Styles";
 
 const Events = ({ navigation }) => {
   const [localEvents, setLocalEvents] = useState([]);
@@ -112,9 +113,8 @@ const Events = ({ navigation }) => {
   );
 
   const renderEventItem = ({ item }) => {
-    const backgroundColour =
-      item.id === eventId ? Colour.darkGray : Colour.lightGray;
-    const colour = item.id === eventId ? Colour.white : Colour.black;
+    const backgroundColour = item.id === eventId ? Colour.blue : Colour.white;
+    const colour = item.id === eventId ? Colour.white : Colour.blue;
 
     return (
       <Item
@@ -131,8 +131,8 @@ const Events = ({ navigation }) => {
 
   const renderDeadlineItem = ({ item }) => {
     const backgroundColour =
-      item.id === deadlineId ? Colour.darkGray : Colour.lightGray;
-    const colour = item.id === deadlineId ? Colour.white : Colour.black;
+      item.id === deadlineId ? Colour.blue : Colour.white;
+    const colour = item.id === deadlineId ? Colour.white : Colour.blue;
 
     return (
       <Item
@@ -155,13 +155,13 @@ const Events = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topButtons}>
-        <Button title="Add deadline" color="red" onPress={addDeadline} />
+        <Button title="Add deadline" color={Colour.red} onPress={addDeadline} />
         <Button
           title="Edit Sleep/Wake"
-          color="blue"
+          color={Colour.blue}
           onPress={() => setModalVisible(true)}
         />
-        <Button title="Add event" color="red" onPress={addEvent} />
+        <Button title="Add event" color={Colour.red} onPress={addEvent} />
       </View>
 
       <Modal
@@ -178,10 +178,11 @@ const Events = ({ navigation }) => {
             <View style={styles.rowView}>
               <Text style={styles.inputText}>Wake time</Text>
               <TextInput
-                style={styles.input}
+                style={styles.modalInput}
                 onChangeText={onWakeTimeChange}
                 value={wakeTime}
                 placeholder="8"
+                placeholderTextColor={Colour.mediumGray}
                 type="text"
                 keyboardType="numeric"
               />
@@ -189,10 +190,11 @@ const Events = ({ navigation }) => {
             <View style={styles.rowView}>
               <Text style={styles.inputText}>Sleep time</Text>
               <TextInput
-                style={styles.input}
+                style={styles.modalInput}
                 onChangeText={onSleepTimeChange}
                 value={sleepTime}
                 placeholder="23"
+                placeholderTextColor={Colour.mediumGray}
                 type="text"
                 keyboardType="numeric"
               />
@@ -200,22 +202,23 @@ const Events = ({ navigation }) => {
             <View style={styles.rowView}>
               <Text style={styles.inputText}>Break hour</Text>
               <TextInput
-                style={styles.input}
+                style={styles.modalInput}
                 onChangeText={onRestTimeChange}
                 value={restTime}
                 placeholder="1"
+                placeholderTextColor={Colour.mediumGray}
                 type="text"
                 keyboardType="numeric"
               />
             </View>
             <Button
               title="Submit"
-              color="blue"
+              color={Colour.blue}
               onPress={submitRequirements}
             ></Button>
             <Button
               title="Close"
-              color="red"
+              color={Colour.red}
               onPress={() => setModalVisible(false)}
             ></Button>
           </View>
@@ -248,13 +251,13 @@ const Events = ({ navigation }) => {
       </View>
 
       <View style={styles.topButtons}>
-        <Button title="Clear" color="red" onPress={clearStorage} />
+        <Button title="Clear" color={Colour.red} onPress={clearStorage} />
         {/* Dummy data for testing purposes to save time */}
-        <Button title="Dummy data" color="green" onPress={writeDummy} />
+        <Button title="Dummy data" color={Colour.green} onPress={writeDummy} />
         <Button
           title="Submit"
           disabled={submitBoolean}
-          color="blue"
+          color={Colour.blue}
           onPress={timetableNav}
         />
       </View>
@@ -263,90 +266,3 @@ const Events = ({ navigation }) => {
 };
 
 export default Events;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 40,
-    padding: 15,
-  },
-  topButtons: {
-    marginTop: 5,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  topView: {
-    flex: 1,
-    marginTop: 5,
-  },
-  bottomView: {
-    flex: 1,
-    marginTop: 20,
-  },
-  headline: {
-    paddingTop: 10,
-    textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 22,
-  },
-  item: {
-    padding: 5,
-    marginVertical: 8,
-    borderRadius: 10,
-    color: "red",
-  },
-  description: {
-    fontSize: 18,
-  },
-  listEmpty: {
-    textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 25,
-    marginTop: 70,
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
-  },
-  inputText: {
-    paddingTop: 22,
-    padding: 5,
-  },
-  input: {
-    height: 40,
-    marginVertical: 10,
-    marginHorizontal: 5,
-    borderWidth: 1,
-    paddingHorizontal: 5,
-  },
-  rowView: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-  },
-});

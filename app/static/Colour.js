@@ -1,16 +1,12 @@
 export default {
   black: "#000000",
-  darkestGray: "#29292c",
-  darkGray: "#3d3e44",
   mediumGray: "#9b9aa1",
   lightGray: "#DBDBDB",
   lightWarmGray: "#f5f5f5",
   offWhite: "#F8F8F8",
   white: "#ffffff",
   red: "#FF0000",
-  green: "#00FF00",
+  green: "#299936",
   blue: "#0000FF",
   darkPurple: "#282b36",
-  tan: "#fcf8f2",
-  transparent: "rgba(0, 0, 0, 0)",
 };

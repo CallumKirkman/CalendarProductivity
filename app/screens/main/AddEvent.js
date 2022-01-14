@@ -1,18 +1,12 @@
 import React, { useState } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  Button,
-} from "react-native";
+import { SafeAreaView, Text, TextInput, View, Button } from "react-native";
 
 import writeEvents from "../../components/WriteEvents";
 
 import { createFixedWeekDate } from "react-native-week-view";
 
-import moment from "moment";
+import styles from "../../static/Styles";
+import Colour from "../../static/Colour";
 
 const EditEvent = ({ route, navigation }) => {
   const [description, onDescriptionChange] = useState("");
@@ -27,15 +21,6 @@ const EditEvent = ({ route, navigation }) => {
   const [type, onTypeChange] = useState("");
 
   let paramsFound = false;
-
-  const createDate = (day, hours, minutes = 0, seconds = 0) => {
-    const date = moment();
-    date.isoWeekday(day);
-    date.hours(hours);
-    date.minutes(minutes);
-    date.seconds(seconds);
-    return date.toDate();
-  };
 
   if (route.params) {
     // console.log("Got params!");
@@ -101,7 +86,7 @@ const EditEvent = ({ route, navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.maintitle}>Add Event (week date)</Text>
-      <Button title="Back" color="blue" onPress={eventsNav} />
+      <Button title="Back" color={Colour.blue} onPress={eventsNav} />
       <TextInput
         style={styles.input}
         onChangeText={onDescriptionChange}
@@ -171,9 +156,9 @@ const EditEvent = ({ route, navigation }) => {
       <TextInput
         style={{
           height: 40,
-          margin: 15,
+          marginVertical: 15,
           borderWidth: 1,
-          paddingHorizontal: 5,
+          // paddingHorizontal: 5,
           backgroundColor: colour,
         }}
         onChangeText={onColourChange}
@@ -199,42 +184,9 @@ const EditEvent = ({ route, navigation }) => {
         type="text"
         onSubmitEditing={submitEvent}
       />
-      <Button title="Submit" color="green" onPress={submitEvent} />
+      <Button title="Submit" color={Colour.green} onPress={submitEvent} />
     </SafeAreaView>
   );
 };
 
 export default EditEvent;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 60,
-    padding: 15,
-  },
-  input: {
-    height: 40,
-    margin: 15,
-    borderWidth: 1,
-    paddingHorizontal: 5,
-  },
-  maintitle: {
-    textAlign: "center",
-    fontSize: 18,
-    fontWeight: "bold",
-    padding: 5,
-  },
-  startTitle: {
-    paddingTop: 20,
-    paddingLeft: 10,
-  },
-  endTitle: {
-    paddingTop: 20,
-    paddingLeft: 10,
-    marginRight: 7,
-  },
-  dateView: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-});

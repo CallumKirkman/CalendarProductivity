@@ -2,17 +2,25 @@ import { StyleSheet } from "react-native";
 import Colour from "./Colour";
 
 export default StyleSheet.create({
-  // EVENTS
+  // SHARED
   container: {
     flex: 1,
     paddingTop: 40,
-    padding: 15,
+    margin: 15,
+  },
+  input: {
+    height: 40,
+    marginVertical: 15,
+    borderWidth: 1,
+    paddingHorizontal: 5,
   },
   topButtons: {
-    marginTop: 5,
+    padding: 5,
     flexDirection: "row",
     justifyContent: "space-between",
   },
+
+  // EVENTS
   topView: {
     flex: 1,
     marginTop: 5,
@@ -28,13 +36,13 @@ export default StyleSheet.create({
     fontSize: 22,
   },
   item: {
-    padding: 5,
-    marginVertical: 8,
-    borderRadius: 10,
-    color: "red",
+    padding: 15,
+    marginVertical: 10,
+    borderRadius: 25,
+    // color: Colour.red,
   },
   description: {
-    fontSize: 18,
+    fontSize: 20,
   },
   listEmpty: {
     textAlign: "center",
@@ -50,11 +58,11 @@ export default StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: Colour.white,
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
-    shadowColor: "#000",
+    shadowColor: Colour.black,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -64,7 +72,7 @@ export default StyleSheet.create({
     elevation: 5,
   },
   textStyle: {
-    color: "white",
+    color: Colour.black,
     fontWeight: "bold",
     textAlign: "center",
   },
@@ -76,7 +84,7 @@ export default StyleSheet.create({
     paddingTop: 22,
     padding: 5,
   },
-  input: {
+  modalInput: {
     height: 40,
     marginVertical: 10,
     marginHorizontal: 5,
@@ -87,16 +95,12 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
   },
+
   // TIMETABLE
-  container: {
+  timetableContainer: {
     flex: 1,
     paddingTop: 40,
     backgroundColor: Colour.offWhite,
-  },
-  topButtons: {
-    padding: 5,
-    flexDirection: "row",
-    justifyContent: "space-between",
   },
   header: {
     backgroundColor: Colour.blue,
@@ -112,18 +116,8 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: Colour.black,
   },
-  // ADD EVENT
-  container: {
-    flex: 1,
-    paddingTop: 60,
-    padding: 15,
-  },
-  input: {
-    height: 40,
-    margin: 15,
-    borderWidth: 1,
-    paddingHorizontal: 5,
-  },
+
+  // ADD EVENT & ADD DEADLINE
   maintitle: {
     textAlign: "center",
     fontSize: 18,
@@ -131,47 +125,16 @@ export default StyleSheet.create({
     padding: 5,
   },
   startTitle: {
-    paddingTop: 20,
-    paddingLeft: 10,
+    paddingTop: 25,
+    // paddingLeft: 10,
   },
   endTitle: {
-    paddingTop: 20,
-    paddingLeft: 10,
+    paddingTop: 25,
+    // paddingLeft: 10,
     marginRight: 7,
   },
   dateView: {
     flexDirection: "row",
     justifyContent: "space-between",
-  },
-  // ADD DEADLINE
-  container: {
-    flex: 1,
-    paddingTop: 60,
-    padding: 15,
-  },
-  input: {
-    height: 40,
-    margin: 10,
-    borderWidth: 1,
-    paddingHorizontal: 5,
-  },
-  maintitle: {
-    textAlign: "center",
-    fontSize: 18,
-    fontWeight: "bold",
-    padding: 5,
-  },
-  startTitle: {
-    paddingTop: 25,
-    paddingLeft: 10,
-  },
-  endTitle: {
-    paddingTop: 25,
-    paddingLeft: 10,
-    marginRight: 7,
-  },
-  dateView: {
-    flexDirection: "row",
-    justifyContent: "space-around",
   },
 });

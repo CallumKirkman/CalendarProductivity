@@ -1,14 +1,10 @@
 import React, { useState } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  Button,
-} from "react-native";
+import { SafeAreaView, Text, TextInput, View, Button } from "react-native";
 
 import writeDeadlines from "../../components/WriteDeadlines";
+
+import Colour from "../../static/Colour";
+import styles from "../../static/Styles";
 
 const EditDeadline = ({ route, navigation }) => {
   const [description, onDescriptionChange] = useState("");
@@ -119,7 +115,7 @@ const EditDeadline = ({ route, navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.maintitle}>Add Deadline (fixed date)</Text>
-      <Button title="Back" color="blue" onPress={deadlinesNav} />
+      <Button title="Back" color={Colour.blue} onPress={deadlinesNav} />
       <TextInput
         style={styles.input}
         onChangeText={onDescriptionChange}
@@ -161,7 +157,7 @@ const EditDeadline = ({ route, navigation }) => {
           style={styles.input}
           onChangeText={onStartHourChange}
           value={startHour}
-          placeholder="hh"
+          placeholder=" hh "
           type="date"
           onSubmitEditing={submitDeadline}
           keyboardType="numeric"
@@ -209,7 +205,7 @@ const EditDeadline = ({ route, navigation }) => {
           style={styles.input}
           onChangeText={onEndHourChange}
           value={endHour}
-          placeholder="hh"
+          placeholder=" hh "
           type="date"
           onSubmitEditing={submitDeadline}
           keyboardType="numeric"
@@ -227,7 +223,7 @@ const EditDeadline = ({ route, navigation }) => {
       <TextInput
         style={{
           height: 40,
-          margin: 10,
+          marginVertical: 15,
           borderWidth: 1,
           paddingHorizontal: 5,
           backgroundColor: colour,
@@ -255,42 +251,9 @@ const EditDeadline = ({ route, navigation }) => {
         type="text"
         onSubmitEditing={submitDeadline}
       />
-      <Button title="Submit" color="green" onPress={submitDeadline} />
+      <Button title="Submit" color={Colour.green} onPress={submitDeadline} />
     </SafeAreaView>
   );
 };
 
 export default EditDeadline;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 60,
-    padding: 15,
-  },
-  input: {
-    height: 40,
-    margin: 10,
-    borderWidth: 1,
-    paddingHorizontal: 5,
-  },
-  maintitle: {
-    textAlign: "center",
-    fontSize: 18,
-    fontWeight: "bold",
-    padding: 5,
-  },
-  startTitle: {
-    paddingTop: 25,
-    paddingLeft: 10,
-  },
-  endTitle: {
-    paddingTop: 25,
-    paddingLeft: 10,
-    marginRight: 7,
-  },
-  dateView: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-});
